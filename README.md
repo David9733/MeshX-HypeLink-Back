@@ -3,7 +3,9 @@
   <img src="https://github.com/user-attachments/assets/807a5735-e104-4bbe-adf5-b7a47830b0cf" width="400"/>
 </div>
 
-## 브랜드와 소비자, 본사와 매장을 하나의 링크로 잇는 B2B 오프라인 매장 자동화 관리 플랫폼
+## 한 줄 소개
+
+실시간 배송 추적·재고 공유·권한 기반 중앙 관리를 통합한 B2B 직영점 운영 플랫폼
 
 ---
 
