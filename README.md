@@ -102,15 +102,16 @@
 [생성] POST /api/notice/create
   → NoticeService.createNotice(NoticeCreateReq)
     1. dto.toEntity() → Notice 엔티티 생성 (isOpen 기본값: false)
-    2. ImageService로 이미지 S3 저장 → Image 엔티티 반환
+    2. ImageService로 S3 키 기반 Image 엔티티 생성 → imageRepository.saveAll() (Image 테이블 별도 저장)
+       (S3 업로드는 Presigned URL로 클라이언트가 직접 처리)
     3. 각 Image → NoticeImages 생성 후 notice.addNoticeImage() 연결
-    4. NoticeJpaRepositoryVerify.createNotice() → DB 저장
+    4. NoticeJpaRepositoryVerify.createNotice() → Notice + NoticeImages DB 저장 (CASCADE ALL)
 
 [수정] PATCH /api/notice/update/{id}
   → NoticeService.update()
     1. repository.findById(id) → 없으면 NoticeException(NOT_FOUND)
     2. null이 아닌 필드만 선택적 업데이트 (title / contents / author)
-    3. 이미지 교체: notice.clearImages() → 새 이미지 재연결
+    3. 이미지 교체: notice.clearImages() → orphanRemoval로 기존 이미지 DB 삭제 후 새 이미지 재연결
     4. repository.update(notice) → DB 저장
     반환: 업데이트된 NoticeDetailRes (S3 URL 포함)
 
@@ -144,9 +145,8 @@
   → PromotionService.update()
     1. repository.findById(id) → Promotion + 연결된 Coupon 조회
     2. 쿠폰 변경 여부 판단:
-         couponId != promotion.getCoupon().getId()
-         → couponRepository.findById(newCouponId)
-         → promotion.updateCoupon(newCoupon)
+         요청의 쿠폰 ID와 기존 쿠폰 ID가 다를 경우
+         → couponRepository.findById(couponId) → promotion.updateCoupon(coupon)
     3. 상태 처리:
          status == ENDED → promotion.updateStatus(ENDED) (수동 종료)
          else → promotion.autoUpdateStatus() (날짜 재계산)
@@ -160,6 +160,7 @@
       status  → promotion.status.eq(PromotionStatus)
     결과 PromotionInfoRes에 연결된 쿠폰 정보 함께 응답:
       couponType (PERCENTAGE / FIXED) · couponName · couponId
+      (조건에 맞는 결과 없으면 빈 리스트 반환)
 ```
 
 ### 공지사항 흐름 (MSA · 헥사고날) [구조확인](https://github.com/beyond-sw-camp/be17-fin-MeshX-HypeLink-BE/tree/Swagger/MSA/api-notice/src/main/java/com/example/apinotice/notice)
@@ -172,10 +173,12 @@
   [ UseCase (NoticeUseCase) ]
     3. NoticeMapper.toDomain(command) → Notice 도메인 모델 변환
        (isOpen 기본값 false 설정)
+       이미지: NoticeImageCreateCommand 목록 → NoticeImage 도메인 목록 변환
+       (S3 업로드는 Presigned URL로 클라이언트가 직접 처리; 서버는 s3Key 수신)
     4. NoticePersistencePort.create(notice) 호출 (아웃바운드 포트 경계)
   [ 아웃바운드 어댑터 (NoticePersistenceAdaptor) ]
     5. NoticeMapper.toEntity(notice) → NoticeEntity 변환
-    6. 각 NoticeImage → NoticeImageEntity 생성
+    6. 각 NoticeImage → NoticeImageEntity 생성 (s3Key·originalFilename·contentType·fileSize 저장)
        noticeEntity.addImageEntity(imgEntity) - 양방향 관계 설정
     7. NoticeRepository.save(noticeEntity)
        (CASCADE ALL → NoticeImageEntity 함께 저장)
@@ -188,12 +191,13 @@
        (없으면 NoticeException(NOTICE_NOT_FOUND))
     3. null이 아닌 필드만 도메인 메서드로 업데이트:
          notice.updateTitle() / updateContents() / updateAuthor()
-    4. notice.clearImages() → 새 이미지 목록 설정
+    4. notice.clearImages() → 도메인 모델 이미지 목록 메모리 초기화 (DB 접근 없음)
+       새 NoticeImage 목록 도메인 모델에 추가
     5. noticePersistencePort.update(notice) 호출
   [ NoticePersistenceAdaptor ]
     6. noticeRepository.findById(id) → NoticeEntity 조회
     7. entity.updateFields() - 필드 반영
-    8. entity.clearImages() - orphanRemoval로 기존 이미지 자동 삭제
+    8. entity.clearImages() → JPA 엔티티 컬렉션 비우기 (orphanRemoval로 기존 이미지 DB 삭제)
     9. 새 NoticeImageEntity 추가 후 save()
     반환: 도메인 모델 → NoticeInfoDto 변환 후 응답
 
@@ -201,12 +205,13 @@
   [ WebAdaptor ]
     1. HTTP 요청 → id 파라미터 수신 → WebPort.read(id) 호출
   [ NoticeUseCase ]
-    2. noticePersistencePort.findById(id) → Notice 도메인 모델 조회
-       (없으면 NoticeException(NOTICE_NOT_FOUND))
-    3. 이미지 URL 변환: exportS3Url(image) → 공개 URL 변환
+    2. noticePersistencePort.findById(id) 호출 (아웃바운드 포트 경계)
   [ NoticePersistenceAdaptor ]
-    4. noticeRepository.findById(id) → NoticeEntity 조회
-    5. NoticeMapper.toDomain(entity) → Notice 도메인 모델 반환
+    3. noticeRepository.findById(id) → NoticeEntity 조회
+       (없으면 NoticeException(NOTICE_NOT_FOUND))
+    4. NoticeMapper.toDomain(entity) → Notice 도메인 모델 반환
+  [ NoticeUseCase — 반환 처리 ]
+    5. 이미지 URL 변환: exportS3Url(image) → 공개 URL 변환
     반환: 도메인 모델 → NoticeInfoDto 변환 후 응답
        (date: updatedAt 우선, 없으면 createdAt)
 
