@@ -1,4 +1,3 @@
-<h1 align="center"> HypeLink (MeshX) </h1>
 <div align="center">
   <img src="https://github.com/user-attachments/assets/807a5735-e104-4bbe-adf5-b7a47830b0cf" width="400"/>
 </div>
@@ -13,12 +12,10 @@
 
 | 항목 | 내용 |
 |------|------|
-| 프로젝트명 | HypeLink (팀명: MeshX) |
-| 분류 | 팀 프로젝트 (4인) |
-| 개발 기간 | (입력 필요: 예 2025.XX ~ 2025.XX) |
-| 내 역할 | Backend 구현 / CI·CD 파이프라인 구축 / 문서화 정리 |
-| 핵심 기술 | Java 17 · Spring Boot 3.5.6 · JWT+Redis · PortOne · Kubernetes Blue-Green |
-| 레포지토리 | [BE](https://github.com/beyond-sw-camp/be17-fin-MeshX-HypeLink-BE) · [FE](https://github.com/beyond-sw-camp/be17-fin-MeshX-HypeLink-FE) |
+| **진행 기간** | 2025.10 ~ 2025.11 |
+| **팀 인원** | 4명 |
+| **내 역할** | Backend 구현 / CI·CD 파이프라인 구축 / 문서화 정리 |
+| **핵심 기술** | Java 17 · Spring Boot 3.5.6 · JWT+Redis · PortOne · Kubernetes Blue-Green |
 
 ---
 
