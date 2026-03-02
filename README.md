@@ -219,49 +219,24 @@
 
 ## 🛠️ 기술 스택
 
-### Backend
+**Backend** : Java 17, Spring Boot 3.5.6, Spring Security, Spring Data JPA, Spring WebSocket, Spring WebFlux,<br>Spring Retry + AOP, Spring Actuator, JWT (jjwt 0.11.5), QueryDSL 5.1.0, PortOne Server SDK 0.21.0,<br>Springdoc OpenAPI 2.8.4, Lombok
 
-| 기술 | 버전 | 용도 |
-|------|------|------|
-| Java | 17 | 언어 |
-| Spring Boot | 3.5.6 | 웹 프레임워크 |
-| Spring Security | (Boot 관리) | 인증/인가 |
-| Spring Data JPA | (Boot 관리) | ORM |
-| Spring WebSocket | (Boot 관리) | 실시간 채팅 |
-| Spring WebFlux | (Boot 관리) | 내부 HTTP 비동기 호출 (WebClient) |
-| Spring Retry + AOP | (Boot 관리) | 재시도 정책 |
-| Spring Actuator | (Boot 관리) | Health Check |
-| JWT (jjwt) | 0.11.5 | 토큰 인증 |
-| QueryDSL | 5.1.0 | 동적 쿼리 |
-| PortOne Server SDK | 0.21.0 | 결제 검증 |
-| Springdoc OpenAPI | 2.8.4 | Swagger UI |
-| Lombok | (Boot 관리) | 보일러플레이트 제거 |
+**CI/CD** : Jenkins (K8s), Kaniko (executor:debug), Kubernetes, Gradle 8.9-jdk17, DockerHub, Discord Webhook
 
 ![Java](https://img.shields.io/badge/Java_17-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
-![Spring Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot_3.5.6-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)
 ![Spring Security](https://img.shields.io/badge/Spring_Security-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white)
 ![Spring Data JPA](https://img.shields.io/badge/Spring_Data_JPA-6DB33F?style=for-the-badge&logo=spring&logoColor=white)
 ![Spring WebSocket](https://img.shields.io/badge/Spring_WebSocket-6DB33F?style=for-the-badge&logo=spring&logoColor=white)
-![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=jsonwebtokens&logoColor=white)
-![QueryDSL](https://img.shields.io/badge/QueryDSL-0285C7?style=for-the-badge&logoColor=white)
-![Swagger](https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=black)
+![Spring WebFlux](https://img.shields.io/badge/Spring_WebFlux-6DB33F?style=for-the-badge&logo=spring&logoColor=white)
+![JWT](https://img.shields.io/badge/JWT_0.11.5-black?style=for-the-badge&logo=jsonwebtokens&logoColor=white)
+![QueryDSL](https://img.shields.io/badge/QueryDSL_5.1.0-0285C7?style=for-the-badge&logoColor=white)
+![Swagger](https://img.shields.io/badge/Swagger_2.8.4-85EA2D?style=for-the-badge&logo=swagger&logoColor=black)
 ![Lombok](https://img.shields.io/badge/Lombok-red?style=for-the-badge&logoColor=white)
-
-### CI/CD / Infra
-
-| 기술 | 버전/비고 | 용도 |
-|------|-----------|------|
-| Jenkins | (K8s 운영) | CI/CD 오케스트레이터 |
-| Kaniko | gcr.io/kaniko-project/executor:debug | Docker 데몬 없는 이미지 빌드 |
-| Kubernetes | (입력 필요) | 컨테이너 오케스트레이션 |
-| Gradle | 8.9-jdk17 | 빌드 도구 |
-| DockerHub | - | 이미지 레지스트리 |
-| Discord Webhook | - | 빌드 알림 |
-
 ![Jenkins](https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=jenkins&logoColor=white)
 ![Kubernetes](https://img.shields.io/badge/Kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
-![Gradle](https://img.shields.io/badge/Gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white)
+![Gradle](https://img.shields.io/badge/Gradle_8.9--jdk17-02303A?style=for-the-badge&logo=gradle&logoColor=white)
 ![DockerHub](https://img.shields.io/badge/DockerHub-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 ![Discord](https://img.shields.io/badge/Discord_Webhook-5865F2?style=for-the-badge&logo=discord&logoColor=white)
 
