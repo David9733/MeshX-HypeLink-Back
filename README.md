@@ -451,12 +451,6 @@ PORTONE_STORE_ID
 PORTONE_API_SECRET
 ```
 
-### Swagger UI
-
-```
-http://localhost:8080/swagger-ui/index.html
-```
-
 ### CI/CD 파이프라인 트리거
 
 ```bash
@@ -475,4 +469,12 @@ kubectl get service hypelink-svc -n hypelink
 [기획서 보기](https://github.com/user-attachments/files/25619989/HypeLink.pdf)
 
 [발표 PPT 보기](https://github.com/user-attachments/files/25619993/meshX.PPT.pdf)
+
+Swagger 보기 
+
+[direct_swagger.pdf](https://github.com/user-attachments/files/25679635/direct_swagger.pdf)
+[auth_swagger.pdf](https://github.com/user-attachments/files/25679634/auth_swagger.pdf)
+[Swagger.pdf](https://github.com/user-attachments/files/25679633/Swagger.pdf)
+[notice_swagger.pdf](https://github.com/user-attachments/files/25679631/notice_swagger.pdf)
+[item_swagger.pdf](https://github.com/user-attachments/files/25679630/item_swagger.pdf)
 
