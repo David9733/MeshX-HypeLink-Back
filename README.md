@@ -121,7 +121,7 @@
        (date: updatedAt 우선, 없으면 createdAt)
 ```
 
-### 프로모션 흐름 (모놀리식)
+### 프로모션 흐름 (모놀리식)[(MSA 구조확인)](https://github.com/beyond-sw-camp/be17-fin-MeshX-HypeLink-BE/tree/Swagger/MSA/api-notice/src/main/java/com/example/apinotice/notice)
 
 
 
@@ -163,7 +163,7 @@
       couponType (PERCENTAGE / FIXED) · couponName · couponId
 ```
 
-### 공지사항 흐름 (MSA · 헥사고날) — api-notice 기준
+### 공지사항 흐름 (MSA · 헥사고날)
 
 ```
 [생성] POST /api/notice/create
