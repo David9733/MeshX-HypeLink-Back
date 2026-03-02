@@ -56,7 +56,7 @@
 - 공지 CRUD API 설계 및 구현
 - 프로모션 CRUD API 설계 및 구현
 - 공지 서비스를 헥사고날 + MSA 고도화 [(MSA 구조확인)](https://github.com/beyond-sw-camp/be17-fin-MeshX-HypeLink-BE/tree/Swagger/MSA/api-notice/src/main/java/com/example/apinotice/notice)
-- 공통 페이징 유틸(`PageReq` / `PageRes`) 설계 및 전 서비스 공통 적용
+- 공통 페이징 유틸 설계 및 적용
 - Naver Maps API 연동 방식 조사 및 기술 검토
 
 ### 2단계 · CI/CD
