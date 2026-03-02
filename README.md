@@ -53,21 +53,21 @@
 
 ### 1단계 · Backend
 
-- **공지 API 구현**: 모놀리식 레이어드 구조에서 본사 공지 등록·조회·수정·삭제 API 설계 및 구현
-- **프로모션 API 구현**: 모놀리식 레이어드 구조에서 프로모션 등록·조회·관리 API 설계 및 구현
-- **공지 MSA 고도화**: 모놀리식 레이어드 구조의 공지 서비스를 MAS 헥사고날 구조로 직접 분리 및 고도화 [(MSA 구조확인)](https://github.com/beyond-sw-camp/be17-fin-MeshX-HypeLink-BE/tree/Swagger/MSA/api-notice/src/main/java/com/example/apinotice/notice)
-- **지도 기능 조사 참여**: GPS 물류 추적 기능 구현을 위해 Naver Maps API 연동 방식 공동 조사 및 기술 검토
+- 본사 공지 등록·조회·수정·삭제 API 설계 및 구현
+- 프로모션 등록·조회·관리 API 설계 및 구현
+- 공지 서비스를 헥사고날 MSA 구조로 직접 분리 및 고도화 [(MSA 구조확인)](https://github.com/beyond-sw-camp/be17-fin-MeshX-HypeLink-BE/tree/Swagger/MSA/api-notice/src/main/java/com/example/apinotice/notice)
+- GPS 물류 추적을 위한 Naver Maps API 연동 방식 공동 조사 및 기술 검토
 
 ### 2단계 · CI/CD
 
-- **파이프라인 품질 확인**: Jenkins + Kubernetes 배포 파이프라인 동작 검증 및 이슈 확인
-- **동영상 시연 검토**: 배포 완료 후 시연 시나리오 확인 및 피드백
+- Jenkins + Kubernetes 배포 파이프라인 동작 검증 및 이슈 확인
+- 배포 완료 후 시연 시나리오 확인 및 피드백
 
 ### 3단계 · 문서
 
 - SpringDoc(Swagger) 기반 API 문서화 적용
-- **README 작성**: 프로젝트 전체 README 구성 및 작성
-- **자료** :기획서 작성 및 위키, 발표 자료 오류 검토
+- 프로젝트 전체 README 구성 및 작성
+- 기획서 작성 및 위키, 발표 자료 오류 검토
 
 ---
 
