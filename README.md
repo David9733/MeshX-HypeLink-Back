@@ -98,15 +98,16 @@
 
 ### 공지사항 흐름 (모놀리식)
 
+- [생성] POST /api/notice/create
 ```
-[생성] POST /api/notice/create
   → NoticeService.createNotice(NoticeCreateReq)
     1. dto.toEntity() → Notice 엔티티 생성 (isOpen 기본값: false)
     2. ImageService로 S3 키 기반 Image 엔티티 생성 → imageRepository.saveAll() (Image 테이블 별도 저장)
        (S3 업로드는 Presigned URL로 클라이언트가 직접 처리)
     3. 각 Image → NoticeImages 생성 후 notice.addNoticeImage() 연결
     4. NoticeJpaRepositoryVerify.createNotice() → Notice + NoticeImages DB 저장 (CASCADE ALL)
-
+```
+```
 [수정] PATCH /api/notice/update/{id}
   → NoticeService.update()
     1. repository.findById(id) → 없으면 NoticeException(NOT_FOUND)
@@ -290,11 +291,6 @@
     5. NoticePageListInfoDto.toDtoPage(noticePage) → 도메인 → DTO 변환
     반환: PageRes<NoticePageListInfoDto> (currentPage·totalPages·totalElements·isFirst·isLast 포함)
 
-[의존성 역전 — 핵심 원칙]
-  도메인(Notice)은 DB·HTTP를 전혀 모름
-  UseCase는 인터페이스(Port)에만 의존 → 구현체 교체 가능
-  Mapper가 도메인 ↔ 엔티티 ↔ Command 간 변환 전담
-  Eureka 서비스 디스커버리 자동 등록 (MSA Pod IP 기반)
 ```
 
 ---
