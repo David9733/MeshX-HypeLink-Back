@@ -433,23 +433,9 @@ docker run -p 8080:8080 \
   hypelink-back
 ```
 
-### 필수 환경변수 (키 목록)
+### 필수 환경변수
 
-```
-SPRING_DATASOURCE_URL
-SPRING_DATASOURCE_USERNAME
-SPRING_DATASOURCE_PASSWORD
-SPRING_DATA_REDIS_HOST
-SPRING_DATA_REDIS_PORT
-JWT_SECRET
-JWT_ACCESS_TOKEN_EXPIRATION_MS
-JWT_REFRESH_TOKEN_EXPIRATION_MS
-AWS_ACCESS_KEY_ID
-AWS_SECRET_ACCESS_KEY
-AWS_S3_BUCKET_NAME
-PORTONE_STORE_ID
-PORTONE_API_SECRET
-```
+필요 환경변수: `SPRING_DATASOURCE_URL`, `SPRING_DATASOURCE_USERNAME`, `SPRING_DATASOURCE_PASSWORD`, `SPRING_DATA_REDIS_HOST`, `SPRING_DATA_REDIS_PORT`, `JWT_SECRET`, `JWT_ACCESS_TOKEN_EXPIRATION_MS`, `JWT_REFRESH_TOKEN_EXPIRATION_MS`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_S3_BUCKET_NAME`, `PORTONE_STORE_ID`, `PORTONE_API_SECRET` 등
 
 ### CI/CD 파이프라인 트리거
 
@@ -470,11 +456,18 @@ kubectl get service hypelink-svc -n hypelink
 
 [발표 PPT 보기](https://github.com/user-attachments/files/25619993/meshX.PPT.pdf)
 
-Swagger 보기 
+<details>
+<summary>Swagger 보기</summary>
 
 [direct_swagger.pdf](https://github.com/user-attachments/files/25679635/direct_swagger.pdf)
+
 [auth_swagger.pdf](https://github.com/user-attachments/files/25679634/auth_swagger.pdf)
-[Swagger.pdf](https://github.com/user-attachments/files/25679633/Swagger.pdf)
+
 [notice_swagger.pdf](https://github.com/user-attachments/files/25679631/notice_swagger.pdf)
+
 [item_swagger.pdf](https://github.com/user-attachments/files/25679630/item_swagger.pdf)
+
+[Swagger.pdf](https://github.com/user-attachments/files/25679633/Swagger.pdf)
+
+</details>
 
