@@ -14,7 +14,7 @@
 |------|------|
 | **진행 기간** | 2025.10 ~ 2025.11 |
 | **팀 인원** | 4명 |
-| **내 역할** | 공지·프로모션 API 모놀리식+레이어드 구현, MSA+헥사고널 고도화,  CI·CD 품질 검증, Swagger·README 문서화 |
+| **내 역할** | 공지·프로모션 API 구현, MSA+헥사고널 고도화,  CI·CD 품질 검증, Swagger·README 문서화 |
 | **핵심 기술** | Java, Spring Boot, JWT, Redis, PortOne, SpringDoc(Swagger), Kubernetes, Jenkins |
 
 ---
