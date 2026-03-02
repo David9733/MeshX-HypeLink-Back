@@ -268,13 +268,15 @@
 
 ## 🖥️ 모놀리식 아키텍처
 
-<img width="6538" height="3727" alt="시스템 아키텍처" src="https://github.com/user-attachments/assets/c5fa309f-8215-4d9a-b35e-9becdbaea2e5" />
+<img width="7431" height="5973" alt="기존 시스템 아키텍처" src="https://github.com/user-attachments/assets/d20ef400-b831-4f31-bb95-94a1d519eaf9" />
+
 
 ---
 
 ## 🏗️ 마이크로서비스 아키텍처
 
-<img width="9492" height="7614" alt="MSA 시스템 아키텍처 " src="https://github.com/user-attachments/assets/fc798436-09e6-4cff-b0d7-c7448875f925" />
+<img width="9311" height="7528" alt="MSA 시스템 아키텍처" src="https://github.com/user-attachments/assets/d4c19c0a-2c47-4c2e-9f6b-98b3c7eea544" />
+
 
 
 | 구분 | 흐름 | 배포 전략 |
