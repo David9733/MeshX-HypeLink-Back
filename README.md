@@ -110,7 +110,7 @@
 [수정] PATCH /api/notice/update/{id}
   → NoticeService.update()
     1. repository.findById(id) → 없으면 NoticeException(NOT_FOUND)
-    2. null이 아닌 필드만 선택적 업데이트 (title / contents / author)
+    2. null이 아닌 필드만 선택적 업데이트 (title / contents / author / isOpen)
     3. 이미지 교체: notice.clearImages() → orphanRemoval로 기존 이미지 DB 삭제 후 새 이미지 재연결
     4. repository.update(notice) → DB 저장
     반환: 업데이트된 NoticeDetailRes (S3 URL 포함)
@@ -121,6 +121,25 @@
     2. exportS3Url(image) 함수로 S3 키 → 공개 URL 변환
     3. NoticeDetailRes.toDto(notice, urlGenerator) → 응답
        (date: updatedAt 우선, 없으면 createdAt)
+
+[전체 조회] GET /api/notice/read/all
+  → NoticeService.readList()
+    1. repository.findAll() → Notice 목록 조회
+       (없으면 NoticeException(NOT_FOUND))
+    반환: NoticeInfoListRes
+
+[목록 조회 (페이징)] GET /api/notice/read/page/all
+  → NoticeService.readList(pageable)
+    1. repository.findAll(pageable) → Page<Notice> 조회
+       (결과 없으면 NoticeException(NOTICE_NOT_FOUND))
+    2. NoticeListResponse.toDtoPage(entityPage) → Page<NoticeListResponse> 변환
+    반환: PageRes<NoticeListResponse> (currentPage·totalPages·totalElements·isFirst·isLast 포함)
+
+[삭제] DELETE /api/notice/delete/{id}
+  → NoticeService.delete(id)
+    1. repository.findById(id) → 없으면 NoticeException(NOT_FOUND)
+    2. repository.delete(notice) → DB 삭제
+    반환: "성공적으로 삭제 되었습니다."
 ```
 
 ### 프로모션 흐름 (모놀리식)
@@ -144,13 +163,14 @@
 [수정] PATCH /api/promotion/update/{id}
   → PromotionService.update()
     1. repository.findById(id) → Promotion + 연결된 Coupon 조회
-    2. 쿠폰 변경 여부 판단:
-         요청의 쿠폰 ID와 기존 쿠폰 ID가 다를 경우
-         → couponRepository.findById(couponId) → promotion.updateCoupon(coupon)
+    2. null이 아닌 필드만 선택적 업데이트 (title / contents / startDate / endDate)
     3. 상태 처리:
          status == ENDED → promotion.updateStatus(ENDED) (수동 종료)
          else → promotion.autoUpdateStatus() (날짜 재계산)
-    4. 이미지 교체 + repository.update() → DB 저장
+    4. 쿠폰 변경 여부 판단:
+         요청의 쿠폰 ID와 기존 쿠폰 ID가 다를 경우
+         → couponRepository.findById(couponId) → promotion.updateCoupon(coupon)
+    5. 이미지 교체 + repository.update() → DB 저장
     반환: PromotionInfoRes (couponId · couponName · couponType 포함)
 
 [검색] GET /api/promotion/search?keyword=세일&status=진행중
@@ -161,6 +181,38 @@
     결과 PromotionInfoRes에 연결된 쿠폰 정보 함께 응답:
       couponType (PERCENTAGE / FIXED) · couponName · couponId
       (조건에 맞는 결과 없으면 빈 리스트 반환)
+
+[전체 조회] GET /api/promotion/read/all
+  → PromotionService.readList()
+    1. repository.findAll() → Promotion 목록 조회
+       (없으면 PromotionException(NOT_FOUND))
+    2. exportS3Url(image) → S3 URL 변환
+    반환: PromotionInfoListRes
+
+[목록 조회 (페이징)] GET /api/promotion/read/page/all
+  → PromotionService.readList(pageReq)
+    1. repository.findAll(pageReq) → Page<Promotion> 조회
+       (결과 없으면 PromotionException(NOT_FOUND))
+    2. PromotionInfoRes.toDtoPage(entityPage, urlGenerator) → Page<PromotionInfoRes> 변환
+    반환: PageRes<PromotionInfoRes>
+
+[상세 조회] GET /api/promotion/read/{id}
+  → PromotionService.readDetails(id)
+    1. repository.findById(id) → Promotion + 연결된 Coupon 조회
+       (없으면 PromotionException(NOT_FOUND))
+    2. exportS3Url(image) → S3 URL 변환
+    반환: PromotionInfoRes (couponId · couponName · couponType 포함)
+
+[삭제] DELETE /api/promotion/delete/{id}
+  → PromotionService.delete(id)
+    1. repository.findById(id) → 없으면 PromotionException(NOT_FOUND)
+    2. repository.delete(promotion) → DB 삭제
+    반환: "프로모션이 성공적으로 삭제 되었습니다."
+
+[상태 목록] GET /api/promotion/status
+  → PromotionService.readStatus()
+    1. PromotionStatus enum 스트리밍 → 각 상태 PromotionStatusInfoRes 변환
+    반환: PromotionStatusListRes (DB 접근 없음)
 ```
 
 ### 공지사항 흐름 (MSA · 헥사고날) [구조확인](https://github.com/beyond-sw-camp/be17-fin-MeshX-HypeLink-BE/tree/Swagger/MSA/api-notice/src/main/java/com/example/apinotice/notice)
@@ -190,7 +242,7 @@
     2. noticePersistencePort.findById(id) → Notice 도메인 모델 조회
        (없으면 NoticeException(NOTICE_NOT_FOUND))
     3. null이 아닌 필드만 도메인 메서드로 업데이트:
-         notice.updateTitle() / updateContents() / updateAuthor()
+         notice.updateTitle() / updateContents() / updateAuthor() / changeOpen()
     4. notice.clearImages() → 도메인 모델 이미지 목록 메모리 초기화 (DB 접근 없음)
        새 NoticeImage 목록 도메인 모델에 추가
     5. noticePersistencePort.update(notice) 호출
@@ -211,9 +263,32 @@
        (없으면 NoticeException(NOTICE_NOT_FOUND))
     4. NoticeMapper.toDomain(entity) → Notice 도메인 모델 반환
   [ NoticeUseCase — 반환 처리 ]
-    5. 이미지 URL 변환: exportS3Url(image) → 공개 URL 변환
+    5. NoticeInfoDto.toDto(notice) → 이미지 URL은 NoticeImageInfoDto 내부에서
+       "/" + s3Key 조합으로 구성 (MSA는 S3UrlBuilder 미사용)
     반환: 도메인 모델 → NoticeInfoDto 변환 후 응답
        (date: updatedAt 우선, 없으면 createdAt)
+
+[전체 조회] GET /api/notice/read/all
+  [ WebAdaptor ]
+    1. HTTP 요청 → WebPort.readList() 호출
+  [ NoticeUseCase ]
+    2. noticePersistencePort.findAll() 호출 (아웃바운드 포트 경계)
+  [ NoticePersistenceAdaptor ]
+    3. noticeRepository.findAll() → NoticeEntity 목록 조회
+    4. NoticeMapper.toDomain(entity) → Notice 도메인 모델 목록 변환
+    반환: 도메인 모델 → NoticeListInfoDto 변환 후 응답
+
+[목록 조회 (페이징)] GET /api/notice/read/page/all
+  [ WebAdaptor ]
+    1. HTTP 요청 → Pageable 파라미터 수신 → WebPort.readList(pageable) 호출
+  [ NoticeUseCase ]
+    2. noticePersistencePort.findAll(pageable) 호출 (아웃바운드 포트 경계)
+  [ NoticePersistenceAdaptor ]
+    3. noticeRepository.findAll(pageable) → Page<NoticeEntity> 조회
+    4. NoticeMapper.toDomain(entity) → Page<Notice> 변환
+  [ NoticeUseCase — 반환 처리 ]
+    5. NoticePageListInfoDto.toDtoPage(noticePage) → 도메인 → DTO 변환
+    반환: PageRes<NoticePageListInfoDto> (currentPage·totalPages·totalElements·isFirst·isLast 포함)
 
 [의존성 역전 — 핵심 원칙]
   도메인(Notice)은 DB·HTTP를 전혀 모름
