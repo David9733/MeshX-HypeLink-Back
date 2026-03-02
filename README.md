@@ -336,6 +336,38 @@
 | `createReceiptAndPayment()` | `direct_store/payment/service/PaymentService.java` | 재고 차감 + 영수증 생성 + Payments 저장 동일 트랜잭션 처리 |
 | `update()` | `head_office/order/service/PurchaseOrderService.java` | 비관적 락 + 최대 3회 재시도 (200ms × n backoff) 발주 승인 |
 | `connecting()` | `head_office/shipment/service/ShipmentService.java` | 배송 기사 배정 + ShipmentStatus.DRIVER_ASSIGNED 상태 전이 |
+### 주요 화면
+
+<details>
+<summary>📺 관리자 대시보드 화면 보기</summary>
+
+#### 본사 로그인
+![본사 관리자](https://github.com/user-attachments/assets/3d5406f6-9176-4b58-b819-286af2814787)
+
+#### 고객 분석
+![고객분석](https://github.com/user-attachments/assets/5c9d7b18-90b7-4ba4-a467-02744d73388d)
+
+#### 전체 배송 추적
+![전체배송추척](https://github.com/user-attachments/assets/dbcec5e0-5382-4e53-9e7b-87846d9f0b49)
+
+#### AS 접수 처리
+![AS](https://github.com/user-attachments/assets/1c9672ca-952e-4b9a-8f49-81fa4743d3b6)
+
+</details>
+
+<details>
+<summary>💳 POS 단말기 화면 보기</summary>
+
+#### POS 결제
+![pos_gif](https://github.com/user-attachments/assets/086e6512-c76e-430a-8061-11aacb365e50)
+
+#### 회원 결제
+![포스기 회원 결제](https://github.com/user-attachments/assets/637100dd-1409-4bb3-90f7-d89f04595ca8)
+
+#### 결제 내역
+![포스기 결제내역](https://github.com/user-attachments/assets/7ee47852-b185-4ad7-8424-19bc6b10fbf1)
+
+</details>
 
 ---
 
