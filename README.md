@@ -55,7 +55,7 @@
 
 - **공지 API 구현**: 모놀리식 레이어드 구조에서 본사 공지 등록·조회·수정·삭제 API 설계 및 구현
 - **프로모션 API 구현**: 모놀리식 레이어드 구조에서 프로모션 등록·조회·관리 API 설계 및 구현
-- **공지 MSA 고도화**: 모놀리식 레이어드 구조의 공지 서비스를 마이크로서비스 헥사고날 구조로 직접 분리 및 고도화
+- **공지 MSA 고도화**: 모놀리식 레이어드 구조의 공지 서비스를 마이크로서비스 헥사고날 구조로 직접 분리 및 고도화[MSA 구조확인](https://github.com/beyond-sw-camp/be17-fin-MeshX-HypeLink-BE/tree/Swagger/MSA/api-notice/src/main/java/com/example/apinotice/notice)
 - **지도 기능 조사 참여**: GPS 물류 추적 기능 구현을 위해 Naver Maps API 연동 방식 공동 조사 및 기술 검토
 
 ### 2단계 · CI/CD
