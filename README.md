@@ -483,46 +483,7 @@ kubectl get service hypelink-svc -n hypelink
 
 ## 📎 참고자료
 
-| 자료 | 링크 |
-|------|------|
-| CI/CD 파이프라인 위키 | [바로가기](https://github.com/beyond-sw-camp/be17-fin-MeshX-HypeLink-BE/wiki/HypeLink-CI-CD-%ED%8C%8C%EC%9D%B4%ED%94%84%EB%9D%BC%EC%9D%B8-%EB%AC%B8%EC%84%9C) |
-| 2차 스프린트 위키 | [바로가기](https://github.com/beyond-sw-camp/be17-fin-MeshX-HypeLink-BE/wiki/Sprint-2) |
-| Swagger UI (배포 환경) | [바로가기](https://www.meshx.store/swagger-ui/index.html) |
-| Auth API 명세서 (PDF) | [열기](./doc/swagger/auth_swagger.pdf) |
-| Direct API 명세서 (PDF) | [열기](./doc/swagger/direct_swagger.pdf) |
-| Item API 명세서 (PDF) | [열기](./doc/swagger/item_swagger.pdf) |
-| Notice API 명세서 (PDF) | [열기](./doc/swagger/notice_swagger.pdf) |
-| ERD (본사 통합 + 모듈별) | 아래 펼치기 참조 |
-| 프론트엔드 레포 | [바로가기](https://github.com/beyond-sw-camp/be17-fin-MeshX-HypeLink-FE) |
-| 기획서 (PDF) | [열기](./doc/HypeLink%20기획서.pdf) |
-| 요구사항 정의서 (PDF) | [열기](./doc/HypeLink%20요구사항%20정의서.pdf) |
-| WBS (PDF) | [열기](./doc/WBS.pdf) |
+[기획서 보기](https://github.com/user-attachments/files/25619989/HypeLink.pdf)
 
-<details>
-<summary>본사 ERD 펼치기/접기</summary>
-<div markdown="1">
+[발표 PPT 보기](https://github.com/user-attachments/files/25619993/meshX.PPT.pdf)
 
-## 본사 ERD
-<img width="6098" height="6796" alt="hypelinkERD" src="https://github.com/user-attachments/assets/5d69fadd-c449-4fd8-a777-5474397b4937" />
-
-</div>
-</details>
-
-<details>
-<summary>MSA 모듈 ERD 펼치기/접기</summary>
-<div markdown="1">
-
-## AUTH ERD
-<img width="2664" height="1490" alt="authERD" src="https://github.com/user-attachments/assets/b1261ca8-2706-40ed-868b-42c8a4723a02" />
-
-## DIRECT ERD
-<img width="3018" height="3112" alt="directERD" src="https://github.com/user-attachments/assets/5759509a-76b8-4e68-9d93-7b0306c95a50" />
-
-## ITEM ERD
-<img width="1958" height="1812" alt="itemERD" src="https://github.com/user-attachments/assets/d6dcd56f-36fb-46bb-a57d-ab3d71c09f15" />
-
-## NOTICE ERD
-<img width="840" height="1100" alt="noticeERD" src="https://github.com/user-attachments/assets/bd19f0e2-4b48-421d-8036-fa9ff830c375" />
-
-</div>
-</details>
