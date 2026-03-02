@@ -266,15 +266,16 @@
 
 ---
 
-## 🖥️ 시스템 아키텍처
+## 🖥️ 모놀리식 아키텍처
 
-<img width="9311" height="7528" alt="MSA_" src="https://github.com/user-attachments/assets/3b30052e-3295-451b-85ab-cdb70c8d27d1" />
+<img width="6538" height="3727" alt="시스템 아키텍처" src="https://github.com/user-attachments/assets/c5fa309f-8215-4d9a-b35e-9becdbaea2e5" />
 
 ---
 
-## 🏗️ CI/CD 아키텍처
+## 🏗️ 마이크로서비스 아키텍처
 
-> [CI/CD 파이프라인 상세 위키](https://github.com/beyond-sw-camp/be17-fin-MeshX-HypeLink-BE/wiki/HypeLink-CI-CD-%ED%8C%8C%EC%9D%B4%ED%94%84%EB%9D%BC%EC%9D%B8-%EB%AC%B8%EC%84%9C)
+<img width="9492" height="7614" alt="MSA 시스템 아키텍처 " src="https://github.com/user-attachments/assets/fc798436-09e6-4cff-b0d7-c7448875f925" />
+
 
 | 구분 | 흐름 | 배포 전략 |
 |------|------|-----------|
