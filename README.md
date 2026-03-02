@@ -53,15 +53,15 @@
 
 ### 1단계 · Backend
 
-- 본사 공지 등록·조회·수정·삭제 API 설계 및 구현
-- 프로모션 등록·조회·관리 API 설계 및 구현
-- 공지 서비스를 헥사고날 MSA 구조로 직접 분리 및 고도화 [(MSA 구조확인)](https://github.com/beyond-sw-camp/be17-fin-MeshX-HypeLink-BE/tree/Swagger/MSA/api-notice/src/main/java/com/example/apinotice/notice)
-- GPS 물류 추적을 위한 Naver Maps API 연동 방식 공동 조사 및 기술 검토
+- 공지 CRUD API 설계 및 구현
+- 프로모션 CRUD API 설계 및 구현
+- 공지 서비스를 헥사고날 + MSA 고도화 [(MSA 구조확인)](https://github.com/beyond-sw-camp/be17-fin-MeshX-HypeLink-BE/tree/Swagger/MSA/api-notice/src/main/java/com/example/apinotice/notice)
+- Naver Maps API 연동 방식 조사 및 기술 검토
 
 ### 2단계 · CI/CD
 
-- Jenkins + Kubernetes 배포 파이프라인 동작 검증 및 이슈 확인
-- 배포 완료 후 시연 시나리오 확인 및 피드백
+- Jenkins + Kubernetes 동작 검증 및 이슈 확인
+- 시연 시나리오 확인 및 피드백
 
 ### 3단계 · 문서
 
