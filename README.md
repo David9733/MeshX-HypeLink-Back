@@ -67,7 +67,7 @@
 
 - **Swagger API 명세 작성**: 담당 도메인(Notice·Promotion) API 명세 작성 및 전체 명세서 구조 정리
 - **README 작성**: 프로젝트 전체 README 구성 및 작성
-- **스프린트 위키**: [2차 스프린트 위키](https://github.com/beyond-sw-camp/be17-fin-MeshX-HypeLink-BE/wiki/Sprint-2) 정리
+- **기획서 작성 및 위키, 발표 자료 오류 검토**
 
 ---
 
