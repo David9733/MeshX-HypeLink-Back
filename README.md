@@ -150,7 +150,7 @@
 
 ### 프로모션 흐름 (모놀리식)
 
-- [생성] POST /api/promotion/create  (@PreAuthorize ADMIN·MANAGER)
+- [생성] POST /api/promotion/create  
 ```
   → PromotionService.createPromotion(PromotionCreateReq)
     1. couponRepository.findById(couponId)
@@ -180,7 +180,7 @@
     5. 이미지 교체 + repository.update() → DB 저장
     반환: PromotionInfoRes (couponId · couponName · couponType 포함)
 ```
-- [검색] GET /api/promotion/search?keyword=세일&status=진행중
+- [검색] GET /api/promotion/search
 ```
   → PromotionService.search()
     QueryDSL BooleanBuilder로 동적 조건 구성:
