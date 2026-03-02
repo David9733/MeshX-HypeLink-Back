@@ -107,36 +107,41 @@
     3. 각 Image → NoticeImages 생성 후 notice.addNoticeImage() 연결
     4. NoticeJpaRepositoryVerify.createNotice() → Notice + NoticeImages DB 저장 (CASCADE ALL)
 ```
+
+- [수정] PATCH /api/notice/update/{id}
 ```
-[수정] PATCH /api/notice/update/{id}
   → NoticeService.update()
     1. repository.findById(id) → 없으면 NoticeException(NOT_FOUND)
     2. null이 아닌 필드만 선택적 업데이트 (title / contents / author / isOpen)
     3. 이미지 교체: notice.clearImages() → orphanRemoval로 기존 이미지 DB 삭제 후 새 이미지 재연결
     4. repository.update(notice) → DB 저장
     반환: 업데이트된 NoticeDetailRes (S3 URL 포함)
-
-[조회] GET /api/notice/read/{id}
+```
+- [조회] GET /api/notice/read/{id}
+```
   → NoticeService.readDetails()
     1. repository.findById(id) → Notice 조회
     2. exportS3Url(image) 함수로 S3 키 → 공개 URL 변환
     3. NoticeDetailRes.toDto(notice, urlGenerator) → 응답
        (date: updatedAt 우선, 없으면 createdAt)
-
-[전체 조회] GET /api/notice/read/all
+```
+- [전체 조회] GET /api/notice/read/all
+```
   → NoticeService.readList()
     1. repository.findAll() → Notice 목록 조회
        (없으면 NoticeException(NOT_FOUND))
     반환: NoticeInfoListRes
-
-[목록 조회 (페이징)] GET /api/notice/read/page/all
+```
+- [목록 조회 (페이징)] GET /api/notice/read/page/all
+```
   → NoticeService.readList(pageable)
     1. repository.findAll(pageable) → Page<Notice> 조회
        (결과 없으면 NoticeException(NOTICE_NOT_FOUND))
     2. NoticeListResponse.toDtoPage(entityPage) → Page<NoticeListResponse> 변환
     반환: PageRes<NoticeListResponse> (currentPage·totalPages·totalElements·isFirst·isLast 포함)
-
-[삭제] DELETE /api/notice/delete/{id}
+```
+- [삭제] DELETE /api/notice/delete/{id}
+```
   → NoticeService.delete(id)
     1. repository.findById(id) → 없으면 NoticeException(NOT_FOUND)
     2. repository.delete(notice) → DB 삭제
