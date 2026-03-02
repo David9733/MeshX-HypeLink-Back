@@ -278,31 +278,6 @@
 <img width="9311" height="7528" alt="MSA 시스템 아키텍처" src="https://github.com/user-attachments/assets/d4c19c0a-2c47-4c2e-9f6b-98b3c7eea544" />
 
 
-
-| 구분 | 흐름 | 배포 전략 |
-|------|------|-----------|
-| 트리거 | GitHub main 브랜치 push → Jenkins WebHook | - |
-| 빌드 | K8s Pod (gradle:8.9-jdk17) → `./gradlew clean bootJar` | - |
-| 이미지 | Kaniko → DockerHub (`raccoon98/hypelink-back:{BUILD_NUMBER}`) | 캐시 활성화 |
-| 배포 | SSH → K8S_MASTER → kubectl apply | Blue-Green (무중단) |
-| 검증 | startupProbe → livenessProbe → readinessProbe | 3단계 Health Check |
-| 전환 | Service selector `ver: blue/green` 교체 → 구버전 replicas=0 | 즉시 트래픽 전환 |
-| 알림 | Discord Webhook (성공/실패 Embed 메시지) | - |
-
-```
-GitHub Push
-  └─► Jenkins (K8s Pod)
-        ├─ gradle:8.9-jdk17  →  bootJar 빌드
-        └─ kaniko             →  이미지 빌드 & DockerHub Push
-              └─► SSH ► K8S Master
-                    ├─ 현재 ver 확인 (blue/green)
-                    ├─ 신규 Deployment 배포 (비활성 색상)
-                    ├─ rollout status 대기
-                    ├─ Service selector 전환
-                    └─ 구버전 replicas=0
-                          └─► Discord Webhook 알림
-```
-
 ---
 
 ## 🤔 기술 선택 이유
