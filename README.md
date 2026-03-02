@@ -56,6 +56,7 @@
 - 공지 CRUD API 설계 및 구현
 - 프로모션 CRUD API 설계 및 구현
 - 공지 서비스를 헥사고날 + MSA 고도화 [(MSA 구조확인)](https://github.com/beyond-sw-camp/be17-fin-MeshX-HypeLink-BE/tree/Swagger/MSA/api-notice/src/main/java/com/example/apinotice/notice)
+- 공통 페이징 유틸(`PageReq` / `PageRes`) 설계 및 전 서비스 공통 적용
 - Naver Maps API 연동 방식 조사 및 기술 검토
 
 ### 2단계 · CI/CD
@@ -123,7 +124,6 @@
 
 ### 프로모션 흐름 (모놀리식)
 
-
 ```
 [생성] POST /api/promotion/create  (@PreAuthorize ADMIN·MANAGER)
   → PromotionService.createPromotion(PromotionCreateReq)
@@ -164,7 +164,6 @@
 
 ### 공지사항 흐름 (MSA · 헥사고날) [구조확인](https://github.com/beyond-sw-camp/be17-fin-MeshX-HypeLink-BE/tree/Swagger/MSA/api-notice/src/main/java/com/example/apinotice/notice)
 
-
 ```
 [생성] POST /api/notice/create
   ── 인바운드 어댑터 (WebAdaptor) ──
@@ -197,6 +196,19 @@
     8. entity.clearImages() — orphanRemoval로 기존 이미지 자동 삭제
     9. 새 NoticeImageEntity 추가 후 save()
     반환: 도메인 모델 → NoticeInfoDto 변환 후 응답
+
+[조회] GET /api/notice/read/{id}
+  ── WebAdaptor ──
+    1. HTTP 요청 → id 파라미터 수신 → WebPort.read(id) 호출
+  ── NoticeUseCase ──
+    2. noticePersistencePort.findById(id) → Notice 도메인 모델 조회
+       (없으면 NoticeException(NOTICE_NOT_FOUND))
+    3. 이미지 URL 변환: exportS3Url(image) → 공개 URL 변환
+  ── NoticePersistenceAdaptor ──
+    4. noticeRepository.findById(id) → NoticeEntity 조회
+    5. NoticeMapper.toDomain(entity) → Notice 도메인 모델 반환
+    반환: 도메인 모델 → NoticeInfoDto 변환 후 응답
+       (date: updatedAt 우선, 없으면 createdAt)
 
 [의존성 역전 — 핵심 원칙]
   도메인(Notice)은 DB·HTTP를 전혀 모름
