@@ -166,45 +166,45 @@
 
 ```
 [생성] POST /api/notice/create
-  ── 인바운드 어댑터 (WebAdaptor) ──
+  [ 인바운드 어댑터 (WebAdaptor) ]
     1. HTTP 요청 → NoticeSaveCommand 생성
     2. WebPort.create(command) 호출 (인터페이스 경계)
-  ── UseCase (NoticeUseCase) ──
+  [ UseCase (NoticeUseCase) ]
     3. NoticeMapper.toDomain(command) → Notice 도메인 모델 변환
        (isOpen 기본값 false 설정)
     4. NoticePersistencePort.create(notice) 호출 (아웃바운드 포트 경계)
-  ── 아웃바운드 어댑터 (NoticePersistenceAdaptor) ──
+  [ 아웃바운드 어댑터 (NoticePersistenceAdaptor) ]
     5. NoticeMapper.toEntity(notice) → NoticeEntity 변환
     6. 각 NoticeImage → NoticeImageEntity 생성
-       noticeEntity.addImageEntity(imgEntity) — 양방향 관계 설정
+       noticeEntity.addImageEntity(imgEntity) - 양방향 관계 설정
     7. NoticeRepository.save(noticeEntity)
        (CASCADE ALL → NoticeImageEntity 함께 저장)
 
 [수정] PATCH /api/notice/update/{id}
-  ── WebAdaptor ──
+  [ WebAdaptor ]
     1. NoticeUpdateCommand 수신 → WebPort.update(id, command) 호출
-  ── NoticeUseCase ──
+  [ NoticeUseCase ]
     2. noticePersistencePort.findById(id) → Notice 도메인 모델 조회
        (없으면 NoticeException(NOTICE_NOT_FOUND))
     3. null이 아닌 필드만 도메인 메서드로 업데이트:
          notice.updateTitle() / updateContents() / updateAuthor()
     4. notice.clearImages() → 새 이미지 목록 설정
     5. noticePersistencePort.update(notice) 호출
-  ── NoticePersistenceAdaptor ──
+  [ NoticePersistenceAdaptor ]
     6. noticeRepository.findById(id) → NoticeEntity 조회
-    7. entity.updateFields() — 필드 반영
-    8. entity.clearImages() — orphanRemoval로 기존 이미지 자동 삭제
+    7. entity.updateFields() - 필드 반영
+    8. entity.clearImages() - orphanRemoval로 기존 이미지 자동 삭제
     9. 새 NoticeImageEntity 추가 후 save()
     반환: 도메인 모델 → NoticeInfoDto 변환 후 응답
 
 [조회] GET /api/notice/read/{id}
-  ── WebAdaptor ──
+  [ WebAdaptor ]
     1. HTTP 요청 → id 파라미터 수신 → WebPort.read(id) 호출
-  ── NoticeUseCase ──
+  [ NoticeUseCase ]
     2. noticePersistencePort.findById(id) → Notice 도메인 모델 조회
        (없으면 NoticeException(NOTICE_NOT_FOUND))
     3. 이미지 URL 변환: exportS3Url(image) → 공개 URL 변환
-  ── NoticePersistenceAdaptor ──
+  [ NoticePersistenceAdaptor ]
     4. noticeRepository.findById(id) → NoticeEntity 조회
     5. NoticeMapper.toDomain(entity) → Notice 도메인 모델 반환
     반환: 도메인 모델 → NoticeInfoDto 변환 후 응답
