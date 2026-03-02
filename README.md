@@ -97,8 +97,6 @@
 
 ### 공지사항 흐름 (모놀리식)
 
-코드 근거: `src/main/java/.../head_office/notice/`
-
 ```
 [생성] POST /api/notice/create
   → NoticeService.createNotice(NoticeCreateReq)
@@ -123,9 +121,9 @@
        (date: updatedAt 우선, 없으면 createdAt)
 ```
 
-### 프로모션 흐름 (모놀리식) — Coupon 연동 포함
+### 프로모션 흐름 (모놀리식)
 
-코드 근거: `src/main/java/.../head_office/promotion/` + `.../coupon/`
+
 
 ```
 [생성] POST /api/promotion/create  (@PreAuthorize ADMIN·MANAGER)
@@ -166,14 +164,6 @@
 ```
 
 ### 공지사항 흐름 (MSA · 헥사고날) — api-notice 기준
-
-코드 근거: `api-notice/src/main/java/com/example/apinotice/notice/`
-
-헥사고날 레이어 구조:
-```
-외부 HTTP → [인바운드 어댑터] → (WebPort) → [UseCase] → (NoticePersistencePort) → [아웃바운드 어댑터] → DB
-             WebAdaptor                    NoticeUseCase                          NoticePersistenceAdaptor
-```
 
 ```
 [생성] POST /api/notice/create
