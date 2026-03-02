@@ -14,7 +14,7 @@
 |------|------|
 | **진행 기간** | 2025.10 ~ 2025.11 |
 | **팀 인원** | 4명 |
-| **내 역할** | Backend 구현 / CI·CD 파이프라인 구축 / 문서화 정리 |
+| **내 역할** | Backend(공지·프로모션 API, MSA 고도화) / CI·CD 품질 검증 / Swagger·README 문서화 |
 | **핵심 기술** | Java 17 · Spring Boot 3.5.6 · JWT+Redis · PortOne · Kubernetes Blue-Green |
 
 ---
@@ -53,31 +53,20 @@
 
 ### 1단계 — Backend 구현
 
-- **인증/인가 설계**: `JWT + Spring Security` 기반 Role별 접근 제어 구현
-  - 5가지 역할(ADMIN·MANAGER·BRANCH_MANAGER·POS_MEMBER·DRIVER) 분리
-  - `RedisTokenStore`로 Refresh Token 관리 + 로그아웃 시 Access Token 블랙리스트 처리
-  - POS 계정 등록 시 POS 코드 정규식 검증(`^[A-Z]{3}[0-9]{3}_[0-9]{2}$`) 로직 구현
-- **결제 로직 구현**: PortOne SDK 연동, 서버 측 금액 검증 → 불일치 시 자동 취소
-  - 재고 차감 원자성 보장 (결제 검증 → 재고 감소 → 영수증 생성 동일 트랜잭션)
-  - 쿠폰 사용 처리 및 UUID 기반 영수증 고유 ID 생성
-- **발주 도메인 구현**: 비관적 락 기반 동시 주문 처리, 재시도 로직(최대 3회, exponential backoff)
-  - 본사→매장, 매장→매장 발주 흐름 분기 처리
-  - 발주 승인 시 재고 자동 반영 (ItemDetail · StoreItemDetail 동기화)
-- **공통 인프라**: S3 Presigned URL 이미지 업로드, QueryDSL 통계 조회, Spring Retry+AOP 재시도 정책
+- **공지(Notice) API 구현**: 모놀리식 구조에서 본사 공지 등록·조회·수정·삭제 API 설계 및 구현
+- **프로모션(Promotion) API 구현**: 모놀리식 구조에서 프로모션 등록·조회·관리 API 설계 및 구현
+- **MSA 고도화**: 모놀리식 서비스를 MSA 모듈 구조로 분리하는 고도화 작업 참여
+- **지도 기능 조사 참여**: GPS 물류 추적 기능 구현을 위해 Google Maps API · Naver Maps API 연동 방식 공동 조사 및 기술 검토 (직접 구현은 타 팀원)
 
-### 2단계 — CI/CD 파이프라인 구축
+### 2단계 — CI/CD 참여
 
-- **Jenkins in Kubernetes**: K8s Pod 내 `gradle:8.9-jdk17` + `kaniko` 멀티 컨테이너 파이프라인 구성
-- **Kaniko 빌드**: Docker 데몬 없이 컨테이너 내부에서 이미지 빌드 후 DockerHub Push
-- **Blue-Green 무중단 배포**: 현재 활성 색상 감지 → 비활성 Deployment 배포 → Rollout 완료 확인 → Service selector 전환 → 구버전 replicas=0 스케일다운
-- **Health Check**: `startupProbe / livenessProbe / readinessProbe` 3단계 설정으로 배포 안정성 확보
-- **Discord Webhook 알림**: 빌드 성공/실패 시 팀 채널에 자동 알림 전송
+- **파이프라인 품질 확인**: Jenkins + Kubernetes Blue-Green 배포 파이프라인 동작 검증 및 이슈 확인
+- **동영상 시연 검토**: 배포 완료 후 시연 시나리오 확인 및 피드백
 
 ### 3단계 — 문서화 및 정리
 
-- **Swagger API 명세**: 4개 모듈(auth·direct·item·notice) PDF 명세서 작성 및 레포 정리
-- **ERD 정리**: 본사 통합 ERD + MSA 모듈별 ERD(AUTH·DIRECT·ITEM·NOTICE) 4종 구조화
-- **CI/CD 문서**: [파이프라인 위키](https://github.com/beyond-sw-camp/be17-fin-MeshX-HypeLink-BE/wiki/HypeLink-CI-CD-%ED%8C%8C%EC%9D%B4%ED%94%84%EB%9D%BC%EC%9D%B8-%EB%AC%B8%EC%84%9C) 작성
+- **Swagger API 명세 작성**: 담당 도메인(Notice·Promotion) API 명세 작성 및 전체 명세서 구조 정리
+- **README 작성**: 프로젝트 전체 README 구성 및 작성
 - **스프린트 위키**: [2차 스프린트 위키](https://github.com/beyond-sw-camp/be17-fin-MeshX-HypeLink-BE/wiki/Sprint-2) 정리
 
 ---
