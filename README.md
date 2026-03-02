@@ -1,109 +1,459 @@
 <h1 align="center"> HypeLink (MeshX) </h1>
-<div align="center"> 
- <img src="https://github.com/user-attachments/assets/807a5735-e104-4bbe-adf5-b7a47830b0cf" width="400"/>
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/807a5735-e104-4bbe-adf5-b7a47830b0cf" width="400"/>
 </div>
 
-> 이름 ‘HypeLink’는 “트렌드를 연결하다 (Hype + Link)”라는 의미를 담고 있습니다.  
-> **브랜드와 소비자, 그리고 본사와 매장을 하나의 링크로 잇는** B2B 오프라인 매장 자동화 관리 플랫폼입니다.
+## 브랜드와 소비자, 본사와 매장을 하나의 링크로 잇는 B2B 오프라인 매장 자동화 관리 플랫폼
 
 ---
 
-## 🫂 팀원 소개
+## 📋 프로젝트 개요
+
+| 항목 | 내용 |
+|------|------|
+| 프로젝트명 | HypeLink (팀명: MeshX) |
+| 분류 | 팀 프로젝트 (4인) |
+| 개발 기간 | (입력 필요: 예 2025.XX ~ 2025.XX) |
+| 내 역할 | Backend 구현 / CI·CD 파이프라인 구축 / 문서화 정리 |
+| 핵심 기술 | Java 17 · Spring Boot 3.5.6 · JWT+Redis · PortOne · Kubernetes Blue-Green |
+| 레포지토리 | [BE](https://github.com/beyond-sw-camp/be17-fin-MeshX-HypeLink-BE) · [FE](https://github.com/beyond-sw-camp/be17-fin-MeshX-HypeLink-FE) |
+
+---
+
+## 🕵️ 팀원 소개
+
 <table align="center">
   <tbody>
     <tr>
-      <td align="center"><a href="https://github.com/kbw07"><img src="https://github.com/user-attachments/assets/706e1875-8a3d-4d3e-9a19-d344d6866f23" width="100px;" alt=""/><br /><sub><b> 강병욱 </b></sub></a><br /></td>
-      <td align="center"><a href="https://github.com/flionme"><img src="https://github.com/user-attachments/assets/08e896f8-c18f-454a-a44a-2337f585e77f" width="100px;" alt=""/><br /><sub><b> 김성인 </b></sub></a><br /></td>
-      <td align="center"><a href="https://github.com/David9733"><img src="https://github.com/user-attachments/assets/4d6ad9a1-ac42-4f36-9259-2b988493cf85" width="100px;" alt=""/><br /><sub><b> 이시욱 </b></sub></a><br /></td>
-      <td align="center"><a href="https://github.com/raccoon-coding"><img src="https://github.com/user-attachments/assets/90a33761-0bd8-4b73-a12a-1e24f0c5a6a9" width="100px;" alt=""/><br /><sub><b> 최민성 </b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/kbw07"><img src="https://github.com/user-attachments/assets/706e1875-8a3d-4d3e-9a19-d344d6866f23" width="100px;" alt=""/><br /><sub><b>강병욱</b></sub></a><br />(입력 필요)</td>
+      <td align="center"><a href="https://github.com/flionme"><img src="https://github.com/user-attachments/assets/08e896f8-c18f-454a-a44a-2337f585e77f" width="100px;" alt=""/><br /><sub><b>김성인</b></sub></a><br />(입력 필요)</td>
+      <td align="center"><a href="https://github.com/David9733"><img src="https://github.com/user-attachments/assets/4d6ad9a1-ac42-4f36-9259-2b988493cf85" width="100px;" alt=""/><br /><sub><b>이시욱</b></sub></a><br />(입력 필요)</td>
+      <td align="center"><a href="https://github.com/raccoon-coding"><img src="https://github.com/user-attachments/assets/90a33761-0bd8-4b73-a12a-1e24f0c5a6a9" width="100px;" alt=""/><br /><sub><b>최민성</b></sub></a><br />(입력 필요)</td>
     </tr>
   </tbody>
 </table>
 
 ---
 
-# 2차 스프린트 설명
-- <a href="https://github.com/beyond-sw-camp/be17-fin-MeshX-HypeLink-BE/wiki/Sprint-2">2차 스프린트 위키 바로가기</a>
+## 🎯 프로젝트 목적
 
-# 🎬 주문·재고 관리 시스템
+> **"HypeLink는 오프라인 매장 관리의 복잡함을 데이터 중심으로 단순화한다."**
 
-## 🎯 프로젝트 소개
-
-**HypeLink**는 스파(SPA) 브랜드와 오프라인 직영점을 위한 **B2B 통합 매장 관리 솔루션**입니다.  
-본사와 매장을 하나의 네트워크로 연결하여, **주문·재고·물류·매출·고객 데이터**를 실시간으로 통합 관리할 수 있도록 설계되었습니다.
-
----
-
-## 📘 프로젝트 개요
-
-### 🔹 배경
-최근 온라인 패션 브랜드들이 오프라인 매장을 확장하며 **옴니채널 전략**을 강화하고 있습니다.  
-그러나 오프라인 운영 과정에서는 다음과 같은 문제들이 자주 발생합니다.
-
-1. 점포별로 분산된 재고로 인해 **본사 차원의 통합 파악 어려움**
-2. 물류 배송 상태를 실시간으로 추적하지 못해 **납기 지연 및 재고 손실 발생**
-3. 매장별 POS·고객 데이터의 **파편화로 의사결정 지연**
-4. 본사와 가맹점 간 **비효율적인 소통 채널 부재**
-
-이러한 문제는 운영 효율성 저하와 매출 감소로 직결됩니다.
+| 구분 | 기존 문제 | HypeLink 해결 | 기대 효과 |
+|------|-----------|---------------|-----------|
+| 재고 관리 | 점포별 분산, 본사 통합 불가 | POS 연동 실시간 재고 동기화 | 재고 손실 감소 |
+| 물류 추적 | 배송 상태 실시간 파악 불가 | GPS 기반 기사 위치 추적 | 납기 지연 클레임 감소 |
+| 고객 데이터 | POS·매장별 데이터 파편화 | 연령·구매패턴 통합 분석 | 맞춤 프로모션 가능 |
+| 소통 채널 | 본사-직영점 간 비효율 소통 | WebSocket 실시간 채팅 허브 | 현장 대응력 강화 |
 
 ---
 
-### 🔹 솔루션 개요
-MeshX 팀은 이러한 문제를 해결하기 위해  
-**GPS 기반 물류 추적, 재고 상태 자동화, 고객 데이터 분석, 실시간 소통 허브**를 통합한  
-**HypeLink 플랫폼**을 설계했습니다.
+## 🙋 내 기여
 
-- 🚚 **실시간 물류 추적**: GPS 기반 배송 경로·도착 예측 실시간 시각화
-- 📦 **재고·매출 관리 자동화**: 점포별 판매 현황 및 재고 상태 자동 동기화
-- 📊 **고객 데이터 분석**: POS 결제 기반 연령·패턴 분석 및 타겟 마케팅
-- 💬 **본사–직영점 커뮤니케이션**: 실시간 소통 및 불만 접수 시스템
+### 1단계 — Backend 구현
 
----
+- **인증/인가 설계**: `JWT + Spring Security` 기반 Role별 접근 제어 구현
+  - 5가지 역할(ADMIN·MANAGER·BRANCH_MANAGER·POS_MEMBER·DRIVER) 분리
+  - `RedisTokenStore`로 Refresh Token 관리 + 로그아웃 시 Access Token 블랙리스트 처리
+  - POS 계정 등록 시 POS 코드 정규식 검증(`^[A-Z]{3}[0-9]{3}_[0-9]{2}$`) 로직 구현
+- **결제 로직 구현**: PortOne SDK 연동, 서버 측 금액 검증 → 불일치 시 자동 취소
+  - 재고 차감 원자성 보장 (결제 검증 → 재고 감소 → 영수증 생성 동일 트랜잭션)
+  - 쿠폰 사용 처리 및 UUID 기반 영수증 고유 ID 생성
+- **발주 도메인 구현**: 비관적 락 기반 동시 주문 처리, 재시도 로직(최대 3회, exponential backoff)
+  - 본사→매장, 매장→매장 발주 흐름 분기 처리
+  - 발주 승인 시 재고 자동 반영 (ItemDetail · StoreItemDetail 동기화)
+- **공통 인프라**: S3 Presigned URL 이미지 업로드, QueryDSL 통계 조회, Spring Retry+AOP 재시도 정책
 
-## 🧭 프로젝트 시나리오
+### 2단계 — CI/CD 파이프라인 구축
 
-| 구분 | 시나리오 설명 | 기대 효과 |
-|------|----------------|------------|
-| 물류 추적 | 배송 기사의 GPS 데이터를 기반으로 본사 대시보드에서 위치 및 도착 시간 실시간 모니터링 | 지연율 감소, 클레임 감소 |
-| 재고 관리 | POS 데이터 자동 집계 및 재고 대시보드 제공 | 재고 회전율 향상, 물류비 절감 |
-| 고객 분석 | 연령·구매 패턴 분석을 통한 맞춤형 프로모션 | 매출 및 재방문율 증가 |
-| 소통 허브 | 본사-직영점 간 실시간 공지 및 문의 시스템 | 협업 및 현장 대응력 강화 |
+- **Jenkins in Kubernetes**: K8s Pod 내 `gradle:8.9-jdk17` + `kaniko` 멀티 컨테이너 파이프라인 구성
+- **Kaniko 빌드**: Docker 데몬 없이 컨테이너 내부에서 이미지 빌드 후 DockerHub Push
+- **Blue-Green 무중단 배포**: 현재 활성 색상 감지 → 비활성 Deployment 배포 → Rollout 완료 확인 → Service selector 전환 → 구버전 replicas=0 스케일다운
+- **Health Check**: `startupProbe / livenessProbe / readinessProbe` 3단계 설정으로 배포 안정성 확보
+- **Discord Webhook 알림**: 빌드 성공/실패 시 팀 채널에 자동 알림 전송
 
----
+### 3단계 — 문서화 및 정리
 
-## ✨ 핵심 기능 요약
-
-| 기능명 | 설명 |
-|--------|------|
-| 직영점 계정 관리 | 본사에서 각 매장의 계정 생성 및 권한 제어 |
-| 멤버십 관리 | 고객 가입·구매 데이터 통합 관리 |
-| 재고 관리 | 본사 및 직영점 재고 현황 실시간 동기화 |
-| 판매량 관리 | 매장별·제품별 매출 데이터 자동 집계 |
-| POS 관리 | 매장 내 결제 및 재고 파악용 POS 연동 |
-| 매장별 POS 제어 | 각 매장 POS 상태 및 동작 모니터링 |
-| GPS 물류 추적 | 배송 경로, 기사 위치, 도착 예측 실시간 추적 |
-| 본사–직영점 실시간 커뮤니케이션 | 공지·요청·이슈 공유 채널 제공 |
+- **Swagger API 명세**: 4개 모듈(auth·direct·item·notice) PDF 명세서 작성 및 레포 정리
+- **ERD 정리**: 본사 통합 ERD + MSA 모듈별 ERD(AUTH·DIRECT·ITEM·NOTICE) 4종 구조화
+- **CI/CD 문서**: [파이프라인 위키](https://github.com/beyond-sw-camp/be17-fin-MeshX-HypeLink-BE/wiki/HypeLink-CI-CD-%ED%8C%8C%EC%9D%B4%ED%94%84%EB%9D%BC%EC%9D%B8-%EB%AC%B8%EC%84%9C) 작성
+- **스프린트 위키**: [2차 스프린트 위키](https://github.com/beyond-sw-camp/be17-fin-MeshX-HypeLink-BE/wiki/Sprint-2) 정리
 
 ---
 
+## ✨ 주요 기능
 
-## 💚 Front-end
-- <a href="https://github.com/beyond-sw-camp/be17-fin-MeshX-HypeLink-FE">프론트엔드 깃허브 바로가기</a>
+| 기능 | 설명 |
+|------|------|
+| 역할 기반 계정 관리 | 본사(ADMIN·MANAGER) / 매장(BRANCH_MANAGER) / POS / 배송기사 계정 분리 관리 |
+| JWT + Redis 인증 | Access Token 블랙리스트 + Refresh Token 갱신으로 보안 로그아웃 구현 |
+| PortOne 결제 검증 | 서버 측 금액 재검증 후 불일치 시 자동 취소, 영수증 및 재고 동시 처리 |
+| 발주·재고 관리 | 본사↔매장 발주 흐름, 비관적 락으로 동시 접근 충돌 방지 |
+| GPS 물류 추적 | 배송 기사 위치 실시간 수신 및 배송 상태 자동 전이 |
+| 실시간 채팅 | WebSocket 기반 본사-직영점 실시간 메시지 채널 |
+| 통계·분석 | QueryDSL 기반 매장별 매출·재고 집계 및 고객 패턴 분석 |
+| 이미지 관리 | AWS S3 Presigned URL 기반 상품 이미지 업로드 |
 
-<br/>
+---
 
-## 🔧 시스템 아키텍처
+## 🔄 사용자 흐름 (역할별)
+
+| 역할 | 주요 흐름 |
+|------|-----------|
+| ADMIN / MANAGER | 직영점 계정 생성 → 상품 등록 → 발주 승인/반려 → 통계 조회 |
+| BRANCH_MANAGER | 로그인 → 매장 재고 확인 → 발주 요청 → 배송 추적 → 실시간 채팅 |
+| POS_MEMBER | POS 계정 로그인(코드 검증) → 상품 조회 → PortOne 결제 → 재고 자동 차감 |
+| DRIVER | 로그인 → 배송 목록 확인 → GPS 위치 전송 → 배송 상태 업데이트 |
+
+---
+
+## 🌱 핵심 로직 흐름
+
+### 인증 흐름
+
+```
+[클라이언트] 로그인 요청
+  → AuthService.login(): 이메일/비밀번호 검증
+  → JwtUtils.generateTokens(): Access Token + Refresh Token 발급
+  → RedisTokenStore.saveRefreshToken(): Redis에 RT 저장 (key: "RT:{email}")
+  → 응답: AccessToken (헤더) + RefreshToken (쿠키)
+
+[토큰 갱신] RefreshToken 수신
+  → RedisTokenStore.getRefreshToken(): Redis 저장값과 비교
+  → 일치 시 새 토큰 발급
+
+[로그아웃]
+  → RefreshToken 삭제
+  → AccessToken 남은 TTL만큼 블랙리스트 등록 (Redis key: AccessToken 값)
+  → JwtAuthenticationFilter: 매 요청마다 블랙리스트 여부 확인
+```
+
+### 결제 검증 흐름
+
+```
+[POS] 결제 완료 후 paymentId 전송
+  → PaymentService.validatePayment()
+    1. PortOne 서버에서 실제 결제 정보 조회 (fetchAndValidatePortOnePayment)
+    2. 결제 상태 검증 (PaidPayment 여부)
+    3. 서버 계산 금액 vs PortOne 실제 금액 비교
+    4. 불일치 시 → portOneService.cancelPayment() 자동 취소 + 예외 throw
+    5. 일치 시 → 재고 차감 + 영수증 생성 + Payments 엔티티 저장
+    6. 쿠폰 사용 처리 (customerCoupon.useCoupon())
+```
+
+### 발주 동시성 제어 흐름
+
+```
+[매장] 발주 승인 요청
+  → PurchaseOrderService.update()
+    1. 비관적 락 (PESSIMISTIC_WRITE) 으로 ItemDetail/StoreItemDetail 조회
+    2. 재고 업데이트 (updateStock)
+    3. LockTimeoutException / PessimisticLockException 발생 시
+       → 최대 3회 재시도 (지연: 200ms × 시도 횟수)
+    4. 3회 초과 시 BaseException throw
+```
+
+### CI/CD 파이프라인 흐름
+
+```
+[GitHub main 브랜치 push]
+  → Jenkins WebHook 트리거
+  → K8s Pod 생성 (gradle:8.9-jdk17 + kaniko 컨테이너)
+  → Checkout (main branch)
+  → Gradle Build: ./gradlew clean bootJar
+  → Kaniko: Dockerfile 기반 이미지 빌드 → DockerHub push
+      (raccoon98/hypelink-back:{BUILD_NUMBER}, :latest)
+  → SSH → K8S_MASTER
+      현재 Service selector 확인 (blue or green)
+      → 비활성 색상 Deployment 배포 (replicas: 2)
+      → kubectl rollout status 대기 (timeout 600s)
+      → Service selector 전환 (ver: newColor)
+      → 이전 Deployment replicas: 0 스케일다운
+  → Discord Webhook 알림 (성공/실패)
+```
+
+---
+
+## 🛠️ 기술 스택
+
+### Backend
+
+| 기술 | 버전 | 용도 |
+|------|------|------|
+| Java | 17 | 언어 |
+| Spring Boot | 3.5.6 | 웹 프레임워크 |
+| Spring Security | (Boot 관리) | 인증/인가 |
+| Spring Data JPA | (Boot 관리) | ORM |
+| Spring WebSocket | (Boot 관리) | 실시간 채팅 |
+| Spring WebFlux | (Boot 관리) | 내부 HTTP 비동기 호출 (WebClient) |
+| Spring Retry + AOP | (Boot 관리) | 재시도 정책 |
+| Spring Actuator | (Boot 관리) | Health Check |
+| JWT (jjwt) | 0.11.5 | 토큰 인증 |
+| QueryDSL | 5.1.0 | 동적 쿼리 |
+| PortOne Server SDK | 0.21.0 | 결제 검증 |
+| Springdoc OpenAPI | 2.8.4 | Swagger UI |
+| Lombok | (Boot 관리) | 보일러플레이트 제거 |
+
+### Database / Infra
+
+| 기술 | 버전 | 용도 |
+|------|------|------|
+| MariaDB | (입력 필요) | 관계형 DB |
+| Redis | (Boot 관리) | Refresh Token 저장 / 블랙리스트 |
+| AWS S3 (spring-cloud-aws) | 3.0.0 | 이미지 저장 |
+
+### CI/CD / Infra
+
+| 기술 | 버전/비고 | 용도 |
+|------|-----------|------|
+| Jenkins | (K8s 운영) | CI/CD 오케스트레이터 |
+| Kaniko | gcr.io/kaniko-project/executor:debug | Docker 데몬 없는 이미지 빌드 |
+| Kubernetes | (입력 필요) | 컨테이너 오케스트레이션 |
+| Gradle | 8.9-jdk17 | 빌드 도구 |
+| DockerHub | - | 이미지 레지스트리 |
+| Discord Webhook | - | 빌드 알림 |
+
+### Frontend
+
+![Vue.js](https://img.shields.io/badge/vue.js-%2335495e.svg?style=for-the-badge&logo=vuedotjs&logoColor=%234FC08D)
+![Pinia](https://img.shields.io/badge/Pinia-ffd859?style=for-the-badge&logoColor=black)
+![Socket.js](https://img.shields.io/badge/Socket.io-black?style=for-the-badge&logo=socketdotio&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
+![Axios](https://img.shields.io/badge/Axios-671ddf?style=for-the-badge&logo=axios&logoColor=white)
+
+---
+
+## 🖥️ 시스템 아키텍처
 
 <img width="9311" height="7528" alt="MSA_" src="https://github.com/user-attachments/assets/3b30052e-3295-451b-85ab-cdb70c8d27d1" />
 
+---
 
+## 🏗️ CI/CD 아키텍처
 
-## ⚙️ CI/CD 파이프라인 문서
-- <a href="https://github.com/beyond-sw-camp/be17-fin-MeshX-HypeLink-BE/wiki/HypeLink-CI-CD-%ED%8C%8C%EC%9D%B4%ED%94%84%EB%9D%BC%EC%9D%B8-%EB%AC%B8%EC%84%9C"> CI/CD 파이프라인 문서
-<br/>
+> [CI/CD 파이프라인 상세 위키](https://github.com/beyond-sw-camp/be17-fin-MeshX-HypeLink-BE/wiki/HypeLink-CI-CD-%ED%8C%8C%EC%9D%B4%ED%94%84%EB%9D%BC%EC%9D%B8-%EB%AC%B8%EC%84%9C)
 
-## 🖊️ ERD 
+| 구분 | 흐름 | 배포 전략 |
+|------|------|-----------|
+| 트리거 | GitHub main 브랜치 push → Jenkins WebHook | - |
+| 빌드 | K8s Pod (gradle:8.9-jdk17) → `./gradlew clean bootJar` | - |
+| 이미지 | Kaniko → DockerHub (`raccoon98/hypelink-back:{BUILD_NUMBER}`) | 캐시 활성화 |
+| 배포 | SSH → K8S_MASTER → kubectl apply | Blue-Green (무중단) |
+| 검증 | startupProbe → livenessProbe → readinessProbe | 3단계 Health Check |
+| 전환 | Service selector `ver: blue/green` 교체 → 구버전 replicas=0 | 즉시 트래픽 전환 |
+| 알림 | Discord Webhook (성공/실패 Embed 메시지) | - |
+
+```
+GitHub Push
+  └─► Jenkins (K8s Pod)
+        ├─ gradle:8.9-jdk17  →  bootJar 빌드
+        └─ kaniko             →  이미지 빌드 & DockerHub Push
+              └─► SSH ► K8S Master
+                    ├─ 현재 ver 확인 (blue/green)
+                    ├─ 신규 Deployment 배포 (비활성 색상)
+                    ├─ rollout status 대기
+                    ├─ Service selector 전환
+                    └─ 구버전 replicas=0
+                          └─► Discord Webhook 알림
+```
+
+---
+
+## 🤔 기술 선택 이유
+
+<details>
+<summary>Backend — Spring Boot / JWT+Redis / Spring Retry</summary>
+
+**Spring Boot 3.5.6 + Java 17**
+- LTS 버전 기반으로 안정성 확보
+- Records, Sealed Classes 등 최신 언어 기능 활용 가능
+
+**JWT + Redis 블랙리스트**
+- Stateless 토큰으로 수평 확장(K8s 멀티 레플리카)에 적합
+- 로그아웃 시 Access Token 즉시 무효화가 필요 → Redis TTL 기반 블랙리스트로 해결
+- Refresh Token은 Redis에 저장하여 탈취 시 서버 측 삭제 가능
+
+**PortOne Server SDK 0.21.0**
+- 서버 측 결제 금액 재검증 필수 (클라이언트 금액 위변조 방지)
+- SDK 제공 Cancel API로 검증 실패 시 자동 취소 원자성 구현
+
+**Spring Retry + AOP**
+- 비관적 락 경합 시 재시도를 별도 모듈로 분리하여 서비스 로직 오염 방지
+- LockTimeoutException 발생 시 점진적 backoff (200ms × n회) 적용
+
+**QueryDSL 5.1.0**
+- 복잡한 통계 쿼리(매장별·기간별 매출, 재고 조회)에서 타입 안전 동적 쿼리 필요
+- JPQL 문자열 방식 대비 컴파일 타임 오류 검출 가능
+
+</details>
+
+<details>
+<summary>CI/CD — Kaniko / Blue-Green / Jenkins in K8s</summary>
+
+**Kaniko (Docker 데몬 없는 빌드)**
+- K8s 환경에서 privileged 권한 없이 컨테이너 내부 이미지 빌드 가능
+- DinD(Docker-in-Docker) 대비 보안 위험 없음
+
+**Blue-Green 배포 전략**
+- 무중단 배포 필수: 매장 POS 결제 흐름 중 재시작 불가
+- Service selector 전환으로 즉시 트래픽 절환, 이슈 발생 시 이전 색상으로 롤백 가능
+
+**Jenkins in Kubernetes**
+- 빌드마다 격리된 Pod 생성 → 빌드 간 환경 오염 없음
+- Gradle 캐시 볼륨 마운트로 반복 빌드 속도 개선
+
+**Discord Webhook 알림**
+- 팀 협업 채널에 빌드 결과 자동 전송 → 배포 상태 실시간 공유
+
+</details>
+
+<details>
+<summary>Infra — MariaDB / Redis / AWS S3</summary>
+
+**MariaDB**
+- MySQL 호환 오픈소스 RDBMS로 K8s 환경 배포 용이
+- 트랜잭션 안정성 필요한 재고·결제·발주 도메인에 적합
+
+**Redis**
+- Token Store, 블랙리스트 모두 TTL 기반 자동 만료 지원
+- 인메모리 조회로 매 요청마다 발생하는 토큰 검증 지연 최소화
+
+**AWS S3 + Presigned URL**
+- 대용량 상품 이미지를 서버 경유 없이 클라이언트가 직접 업로드
+- 서버 부하 감소 및 업로드 속도 개선
+
+</details>
+
+---
+
+## 🔑 핵심 메서드 (대표 파트)
+
+| 메서드 | 위치 | 설명 |
+|--------|------|------|
+| `register()` | `auth/service/AuthService.java` | 역할별 계정 생성 분기 (POS 코드 검증, 매장 등록 시 지오코딩 포함) |
+| `login()` | `auth/service/AuthService.java` | 비밀번호 검증 + Access/Refresh Token 발급 |
+| `logout()` | `auth/service/AuthService.java` | RT 삭제 + AT 블랙리스트 등록 (잔여 TTL 기준) |
+| `blacklistToken()` | `auth/service/RedisTokenStore.java` | Redis에 AccessToken을 잔여 만료시간만큼 저장 |
+| `validatePayment()` | `direct_store/payment/service/PaymentService.java` | PortOne 실제 결제 조회 → 금액 검증 → 실패 시 자동 취소 |
+| `createReceiptAndPayment()` | `direct_store/payment/service/PaymentService.java` | 재고 차감 + 영수증 생성 + Payments 저장 동일 트랜잭션 처리 |
+| `update()` | `head_office/order/service/PurchaseOrderService.java` | 비관적 락 + 최대 3회 재시도 (200ms × n backoff) 발주 승인 |
+| `connecting()` | `head_office/shipment/service/ShipmentService.java` | 배송 기사 배정 + ShipmentStatus.DRIVER_ASSIGNED 상태 전이 |
+
+---
+
+## 🔧 트러블슈팅 / 개선 경험
+
+### [Backend] 발주 동시성 충돌 — 비관적 락 + 재시도 로직
+
+**문제**: 복수 매장이 동시에 동일 상품 재고에 발주를 요청할 때 재고 음수 현상 발생 가능성<br>
+**원인**: 낙관적 락만으로는 충돌 시 예외 처리 후 재시도 로직 구현이 복잡<br>
+**해결**: `PESSIMISTIC_WRITE` 락으로 ItemDetail 조회 → `LockTimeoutException` 발생 시 최대 3회 재시도 (200ms × 시도 횟수 backoff) 적용<br>
+**결과**: 동시 발주 충돌 시 자동 재시도로 대부분 처리 가능, 3회 초과 시 명시적 예외 반환 (측정 필요)
+
+### [Backend] 결제 검증 실패 시 부분 상태 불일치
+
+**문제**: PortOne 결제는 성공했으나 금액 불일치 또는 재고 부족 시 결제 취소 처리 누락 위험<br>
+**원인**: 결제 검증과 재고/영수증 처리가 별도 단계로 분리되어 중간 실패 시 취소 누락<br>
+**해결**: `validatePayment()` 전체를 try-catch로 감싸 어떤 예외든 `portOneService.cancelPayment()` 먼저 호출 후 예외 re-throw<br>
+**결과**: 결제 취소 누락 없이 클라이언트에 명확한 오류 반환 (측정 필요)
+
+### [Backend] 로그아웃 후 Access Token 재사용 가능 문제
+
+**문제**: JWT는 Stateless이므로 로그아웃 후에도 만료 전 Access Token이 유효<br>
+**원인**: JWT 자체를 서버에서 무효화하는 표준 방법 없음<br>
+**해결**: 로그아웃 시 Access Token의 잔여 TTL을 계산 → Redis에 해당 토큰을 key로 `"logout"` 저장. `JwtAuthenticationFilter`에서 매 요청마다 `isBlacklisted()` 체크<br>
+**결과**: 로그아웃 후 AT 재사용 방지 (Redis 조회 1회 추가, 측정 필요)
+
+### [CI/CD] Docker 빌드 권한 문제 — Kaniko 도입
+
+**문제**: K8s 파이프라인에서 DinD 방식으로 Docker 이미지 빌드 시 `privileged` 권한 필요<br>
+**원인**: K8s 보안 정책상 privileged 컨테이너 실행 제한<br>
+**해결**: Kaniko(`gcr.io/kaniko-project/executor:debug`)로 교체 → privileged 없이 컨테이너 내부 이미지 빌드<br>
+**결과**: 보안 컨텍스트 제한 환경에서 정상 빌드·Push 가능
+
+### [CI/CD] 무중단 배포 — Blue-Green 전략 구현
+
+**문제**: 배포 중 재시작으로 인해 매장 POS 결제 흐름이 끊기는 위험<br>
+**원인**: Rolling Update 방식에서도 파드 교체 시 일시적 연결 끊김 발생 가능<br>
+**해결**: Blue-Green 배포 스크립트를 Jenkinsfile에 직접 구현. 현재 활성 색상 감지 → 비활성 Deployment 신규 배포 → `rollout status` 대기 → Service selector 전환 → 구버전 replicas=0<br>
+**결과**: 트래픽 전환 시 다운타임 없이 신규 버전 전환 (측정 필요)
+
+---
+
+## 🚀 실행 및 테스트
+
+### 로컬 실행
+
+```bash
+# 1. 빌드
+./gradlew clean bootJar
+
+# 2. 실행 (환경변수 설정 후)
+java -jar build/libs/*.jar
+```
+
+### Docker 실행
+
+```bash
+docker build -t hypelink-back .
+docker run -p 8080:8080 \
+  -e SPRING_DATASOURCE_URL=... \
+  hypelink-back
+```
+
+### 필수 환경변수 (키 목록)
+
+```
+SPRING_DATASOURCE_URL
+SPRING_DATASOURCE_USERNAME
+SPRING_DATASOURCE_PASSWORD
+SPRING_DATA_REDIS_HOST
+SPRING_DATA_REDIS_PORT
+JWT_SECRET
+JWT_ACCESS_TOKEN_EXPIRATION_MS
+JWT_REFRESH_TOKEN_EXPIRATION_MS
+AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY
+AWS_S3_BUCKET_NAME
+PORTONE_STORE_ID
+PORTONE_API_SECRET
+```
+
+### Swagger UI
+
+```
+http://localhost:8080/swagger-ui/index.html
+```
+
+### CI/CD 파이프라인 트리거
+
+```bash
+# main 브랜치 push 시 Jenkins WebHook 자동 실행
+git push origin main
+
+# K8s 배포 상태 확인
+kubectl get pods -n hypelink
+kubectl get service hypelink-svc -n hypelink
+```
+
+---
+
+## 📎 참고자료
+
+| 자료 | 링크 |
+|------|------|
+| CI/CD 파이프라인 위키 | [바로가기](https://github.com/beyond-sw-camp/be17-fin-MeshX-HypeLink-BE/wiki/HypeLink-CI-CD-%ED%8C%8C%EC%9D%B4%ED%94%84%EB%9D%BC%EC%9D%B8-%EB%AC%B8%EC%84%9C) |
+| 2차 스프린트 위키 | [바로가기](https://github.com/beyond-sw-camp/be17-fin-MeshX-HypeLink-BE/wiki/Sprint-2) |
+| Swagger UI (배포 환경) | [바로가기](https://www.meshx.store/swagger-ui/index.html) |
+| Auth API 명세서 (PDF) | [열기](./doc/swagger/auth_swagger.pdf) |
+| Direct API 명세서 (PDF) | [열기](./doc/swagger/direct_swagger.pdf) |
+| Item API 명세서 (PDF) | [열기](./doc/swagger/item_swagger.pdf) |
+| Notice API 명세서 (PDF) | [열기](./doc/swagger/notice_swagger.pdf) |
+| ERD (본사 통합 + 모듈별) | 아래 펼치기 참조 |
+| 프론트엔드 레포 | [바로가기](https://github.com/beyond-sw-camp/be17-fin-MeshX-HypeLink-FE) |
+| 기획서 (PDF) | [열기](./doc/HypeLink%20기획서.pdf) |
+| 요구사항 정의서 (PDF) | [열기](./doc/HypeLink%20요구사항%20정의서.pdf) |
+| WBS (PDF) | [열기](./doc/WBS.pdf) |
 
 <details>
 <summary>본사 ERD 펼치기/접기</summary>
@@ -116,7 +466,7 @@ MeshX 팀은 이러한 문제를 해결하기 위해
 </details>
 
 <details>
-<summary> MSA 모듈 ERD 접기/펼치기</summary>
+<summary>MSA 모듈 ERD 펼치기/접기</summary>
 <div markdown="1">
 
 ## AUTH ERD
@@ -133,194 +483,3 @@ MeshX 팀은 이러한 문제를 해결하기 위해
 
 </div>
 </details>
-
-<br/>
-
-## 📝 SWAGGER API
-<details>
-<summary> 모듈 API 명세서 보기</summary>
-<div markdown="1">
-
-👉 [auth API명세서.pdf 열기](./doc/swagger/auth_swagger.pdf)
-
-👉 [direct API명세서.pdf 열기](./doc/swagger/direct_swagger.pdf)
-
-👉 [item API명세서.pdf 열기](./doc/swagger/item_swagger.pdf)
-
-👉 [notice API명세서.pdf 열기](./doc/swagger/notice_swagger.pdf)
-
-</div>
-</details>
-
-
-
-<details>
-<summary>  모놀리식 API 명세서 보기</summary>
-<div markdown="1">
-
-<details>
-<summary>1. 배송 기능 API 명세서</summary>
-<div markdown="1">
- 
-## 배송 기능 API
-<img width="891" height="556" alt="배송기능1" src="https://github.com/user-attachments/assets/f686ae72-922a-4892-9419-89c85efa9980" />
-<img width="888" height="707" alt="배송기능2" src="https://github.com/user-attachments/assets/bcd136df-ec1a-4ec4-b639-a4c958a4f668" />
-<img width="892" height="557" alt="기사3" src="https://github.com/user-attachments/assets/7611f857-1412-4471-9565-86693cb1bde4" />
-
-</div>
-</details>
-
-<details>
-<summary>2. 통계 기능 API 명세서</summary>
-<div markdown="1">
-
-## 통계 기능 API
-<img width="1186" height="845" alt="통계3" src="https://github.com/user-attachments/assets/71d958d1-f480-4ca6-b2cc-a346881cc62e" />
-<img width="1187" height="643" alt="통계2" src="https://github.com/user-attachments/assets/54251074-0cbc-41c0-9aa0-3669cd359f9c" />
-<img width="892" height="742" alt="통계1" src="https://github.com/user-attachments/assets/23290732-075c-4084-a381-429c06e90b48" />
-<img width="890" height="585" alt="통계11" src="https://github.com/user-attachments/assets/5e7520e6-2513-43fc-aa5b-b7eaa443cb1c" />
-<img width="1186" height="616" alt="통계10" src="https://github.com/user-attachments/assets/6d75849c-1321-47ca-bd1c-024558d4ecb5" />
-<img width="1186" height="642" alt="통계9" src="https://github.com/user-attachments/assets/5b1d1a38-e415-4f9d-88b2-89295e35a3db" />
-<img width="890" height="743" alt="통계8" src="https://github.com/user-attachments/assets/e08e4a0f-3e6b-402b-91ba-dfbbff40e39c" />
-<img width="1185" height="791" alt="통계7" src="https://github.com/user-attachments/assets/f3dafa68-0dc6-4d24-8221-be5ffb3e8f85" />
-<img width="1183" height="747" alt="통계6" src="https://github.com/user-attachments/assets/44da83bd-90be-4bcb-8347-285983ddcc27" />
-<img width="1190" height="725" alt="통계5" src="https://github.com/user-attachments/assets/ebb2d2d6-122a-4ddb-bc1d-bd2148a4bcdb" />
-<img width="890" height="890" alt="통계4" src="https://github.com/user-attachments/assets/cdfb8440-8f87-4a39-bc73-9988f0c0c38b" />
-<img width="892" height="727" alt="통계19" src="https://github.com/user-attachments/assets/69d64301-f1cf-4d64-af56-868e89c17bc3" />
-<img width="890" height="707" alt="통계18" src="https://github.com/user-attachments/assets/8133febd-d00b-42bd-8c8e-f92fb0f5cf3e" />
-<img width="592" height="637" alt="통계17" src="https://github.com/user-attachments/assets/422c4631-6338-4a11-b3f8-cd035a1ecb6c" />
-<img width="593" height="592" alt="통계16" src="https://github.com/user-attachments/assets/93e4e756-55ef-470f-ad9b-6d282fe3df0e" />
-<img width="887" height="876" alt="통계15" src="https://github.com/user-attachments/assets/a8822a5a-d0f6-44ae-8c93-d89875c26e7c" />
-<img width="891" height="892" alt="통계14" src="https://github.com/user-attachments/assets/3727356a-57ab-4a31-9803-640f10f2964e" />
-<img width="890" height="566" alt="통계13" src="https://github.com/user-attachments/assets/f0789b3c-d25c-4631-b1a6-fbcaba79d7b5" />
-<img width="887" height="800" alt="통계12" src="https://github.com/user-attachments/assets/508b21ff-1580-4cab-9f6f-77da7f591ccb" />
-
-</div>
-</details>
-
-<details>
-<summary>3. 본사 발주 API 명세서 </summary>
-<div markdown="1">
-
-## 본사 발주 API 명세서
-<img width="1188" height="722" alt="발주7" src="https://github.com/user-attachments/assets/3eb362af-1f7d-4a7d-888b-2326d70ca325" />
-<img width="1187" height="722" alt="발주6" src="https://github.com/user-attachments/assets/3cc3e84b-8b58-4ba0-af12-54833b84f76c" />
-<img width="1183" height="805" alt="발주5" src="https://github.com/user-attachments/assets/16334be0-c289-49e6-92ff-72fc818906c7" />
-<img width="1188" height="735" alt="발주4" src="https://github.com/user-attachments/assets/21ded542-d982-4c39-acf7-1d7c64702f9e" />
-<img width="887" height="906" alt="발주3" src="https://github.com/user-attachments/assets/a99e500b-0195-49f7-8e26-d42a0211467c" />
-<img width="1332" height="693" alt="발주2" src="https://github.com/user-attachments/assets/46be6f9d-6dd6-492c-be3d-63c98d7620cc" />
-<img width="1332" height="690" alt="발주1" src="https://github.com/user-attachments/assets/10a9905b-f703-4983-abe3-c3186eba0fdf" />
-<img width="1188" height="715" alt="발주9" src="https://github.com/user-attachments/assets/d75d140e-648a-45fd-81df-de44b2ef87e0" />
-<img width="887" height="902" alt="발주8" src="https://github.com/user-attachments/assets/4c47a878-fdbd-45ea-bb01-6c71ed056ba5" />
-
-
-</div>
-</details>
-
-<details>
-<summary>4. 가맹점 발주 API 명세서 </summary>
-<div markdown="1">
-
-## 가맹점 발수 API 명세서
-<img width="887" height="762" alt="발주8" src="https://github.com/user-attachments/assets/482f49a9-660a-4d9c-8e72-0d61b4fc0ebd" />
-<img width="1188" height="818" alt="발주7" src="https://github.com/user-attachments/assets/24cf0ddf-5a1e-4cd2-8458-9277fe66d3f9" />
-<img width="886" height="881" alt="발주6" src="https://github.com/user-attachments/assets/b54bd7f1-8294-4ccc-a591-c63e1eb7add1" />
-<img width="591" height="612" alt="발주3" src="https://github.com/user-attachments/assets/f9796118-2fa2-469c-80fa-8b85ace6917a" />
-<img width="887" height="662" alt="발주2" src="https://github.com/user-attachments/assets/7633651a-6620-4972-9527-02bce57b5f0f" />
-<img width="887" height="882" alt="발주1" src="https://github.com/user-attachments/assets/b1d2a88f-002f-4ce0-8673-3da07767df20" />
-<img width="888" height="796" alt="발주5" src="https://github.com/user-attachments/assets/1a691b22-f343-4eab-90ee-3e426df1c51f" />
-<img width="888" height="560" alt="발주9" src="https://github.com/user-attachments/assets/bf24d8c1-c8e9-4172-a870-3c1d99fd145a" />
-
-
-</div>
-</details>
-
-<details>
-<summary>5. 본부 상품관리 API 명세서</summary>
-<div markdown="1">
-
-## 본사 상품관리 API 명세서
-
-<img width="900" height="882" alt="본사 상품관리4" src="https://github.com/user-attachments/assets/6e4b5ea3-de0f-4482-b60d-719cb81008ee" />
-<img width="1188" height="722" alt="본사 상품관리3" src="https://github.com/user-attachments/assets/8fde2ccf-8919-472b-ae49-31571c67be5b" />
-<img width="1190" height="727" alt="본사 상품관리2" src="https://github.com/user-attachments/assets/edf9923e-1522-4e18-a430-348217c5fbc7" />
-<img width="1191" height="726" alt="본사 상품관리1" src="https://github.com/user-attachments/assets/27042b38-d5d2-471c-9565-3d67f4823c06" />
-<img width="1195" height="832" alt="본사 상품관리7" src="https://github.com/user-attachments/assets/37e269c9-73a3-4ea4-95b2-0cc37bea0283" />
-<img width="1198" height="775" alt="본사 상품관리6" src="https://github.com/user-attachments/assets/4910b11d-a869-43a2-917c-297bfe5d347a" />
-<img width="595" height="632" alt="본사 상품관리5" src="https://github.com/user-attachments/assets/25a5c71e-7aeb-4584-a9df-e3db502aceb5" />
-<img width="1193" height="727" alt="본사 상품관리13" src="https://github.com/user-attachments/assets/90e10c77-519b-49fc-8cba-e7b9b10ebeda" />
-<img width="1197" height="723" alt="본사 상품관리12" src="https://github.com/user-attachments/assets/c5061c42-b539-407f-b728-55e796db2068" />
-<img width="1190" height="722" alt="본사 상품관리11" src="https://github.com/user-attachments/assets/594f153e-d8ba-401f-9d63-b91d12892dcf" />
-<img width="1192" height="772" alt="본사 상품관리10" src="https://github.com/user-attachments/assets/bfbc207c-081b-434c-9ce0-cd66b9eda4f1" />
-<img width="896" height="882" alt="본사 상품관리9" src="https://github.com/user-attachments/assets/783122b3-d2d5-4cd3-8d9c-8f41529bb255" />
-<img width="1201" height="728" alt="본사 상품관리8" src="https://github.com/user-attachments/assets/76bdda01-5d45-4b30-849e-953333d2a8bb" />
-<img width="1197" height="772" alt="본사 상품관리14" src="https://github.com/user-attachments/assets/51721710-4134-4d6b-bfe2-afacd3cce81f" />
-
-</div>
-</details>
-
-</div>
-</details>
-
-
-- [스웨거 UI 접속하기](https://www.meshx.store/swagger-ui/index.html)
-
-
----
-
-## 🛠 기술 스택
-
-### ✔️Frontend
-![Vue.js](https://img.shields.io/badge/vue.js-%2335495e.svg?style=for-the-badge&logo=vuedotjs&logoColor=%234FC08D)
-![Pinia](https://img.shields.io/badge/Pinia-ffd859?style=for-the-badge&logoColor=black)
-![Socket.js](https://img.shields.io/badge/Socket.io-black?style=for-the-badge&logo=socketdotio&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
-![Axios](https://img.shields.io/badge/Axios-671ddf?style=for-the-badge&logo=axios&logoColor=white)
-![HTML](https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=html5&logoColor=white)
-![CSS](https://img.shields.io/badge/CSS-1572B6?style=for-the-badge&logo=css3&logoColor=white)
-
-### ✔️Backend
-![Java](https://img.shields.io/badge/Java-007396?style=for-the-badge&logo=openjdk&logoColor=white)
-![Spring Boot](https://img.shields.io/badge/Spring%20Boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)
-![Spring Security](https://img.shields.io/badge/Spring%20Security-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white)
-![Swagger](https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=white)
-![Gradle](https://img.shields.io/badge/Gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white)
-![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=jsonwebtokens&logoColor=white)
-![QueryDSL](https://img.shields.io/badge/QueryDSL-4479A1?style=for-the-badge&logoColor=white)
-![Lombok](https://img.shields.io/badge/Lombok-BC4125?style=for-the-badge&logoColor=white)
-
-### ✔️Database
-![MariaDB](https://img.shields.io/badge/MariaDB-003545?style=for-the-badge&logo=mariadb&logoColor=white)
-
-### ✔️Infra
-![AWS S3](https://img.shields.io/badge/Amazon%20S3-569A31?style=for-the-badge&logo=amazons3&logoColor=white)
-![Kaniko](https://img.shields.io/badge/Kaniko-2A2E35?style=for-the-badge&logo=docker&logoColor=white)
-![Jenkins](https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=jenkins&logoColor=white)
-![Kubernetes](https://img.shields.io/badge/Kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)
-
----
-
-## 🔧 기술적 선택과 설계 배경
-
-### ⚙️ 아키텍처 설계
-- **Spring Boot MVC** 패턴 기반으로 서비스, 도메인, 컨트롤러를 명확히 분리
-- **JWT + Spring Security** 조합을 통한 안전한 인증/인가 구조
-- **Kaniko + Jenkins + Kubernetes** 기반 CI/CD 파이프라인 구축으로 자동 배포 구현
-
-### 📡 데이터 처리
-- **QueryDSL**을 통한 동적 쿼리 최적화 및 매장별 매출/재고 통계 조회
-
-### ☁️ 인프라 전략
-- **MariaDB** 로 데이터 안정성 확보
-- **S3**를 통한 이미지 처리
-- **K8s 기반 Blue-Green 배포**로 무중단 배포 및 안정성 확보
-
----
-
-## 🚀 서비스 목표
-
-> “HypeLink는 오프라인 매장 관리의 복잡함을 데이터 중심으로 단순화한다.”
-
-본사와 매장이 실시간으로 연결되고,  
-모든 주문·재고·물류 정보가 투명하게 공유되는 환경을 구축함으로써  
-**비용 절감, 매출 성장, 협업 효율성**을 동시에 실현하는 것이 목표입니다.
