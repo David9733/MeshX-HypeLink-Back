@@ -162,7 +162,7 @@
       couponType (PERCENTAGE / FIXED) · couponName · couponId
 ```
 
-### 공지사항 흐름 (MSA · 헥사고날)[구조확인](https://github.com/beyond-sw-camp/be17-fin-MeshX-HypeLink-BE/tree/Swagger/MSA/api-notice/src/main/java/com/example/apinotice/notice)
+### 공지사항 흐름 (MSA · 헥사고날) [구조확인](https://github.com/beyond-sw-camp/be17-fin-MeshX-HypeLink-BE/tree/Swagger/MSA/api-notice/src/main/java/com/example/apinotice/notice)
 
 
 ```
