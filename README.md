@@ -95,67 +95,124 @@
 
 ## 🌱 핵심 로직 흐름
 
-### 인증 흐름
+### 공지사항 흐름 (모놀리식)
+
+코드 근거: `src/main/java/.../head_office/notice/`
 
 ```
-[클라이언트] 로그인 요청
-  → AuthService.login(): 이메일/비밀번호 검증
-  → JwtUtils.generateTokens(): Access Token + Refresh Token 발급
-  → RedisTokenStore.saveRefreshToken(): Redis에 RT 저장 (key: "RT:{email}")
-  → 응답: AccessToken (헤더) + RefreshToken (쿠키)
+[생성] POST /api/notice/create
+  → NoticeService.createNotice(NoticeCreateReq)
+    1. dto.toEntity() → Notice 엔티티 생성 (isOpen 기본값: false)
+    2. ImageService로 이미지 S3 저장 → Image 엔티티 반환
+    3. 각 Image → NoticeImages 생성 후 notice.addNoticeImage() 연결
+    4. NoticeJpaRepositoryVerify.createNotice() → DB 저장
 
-[토큰 갱신] RefreshToken 수신
-  → RedisTokenStore.getRefreshToken(): Redis 저장값과 비교
-  → 일치 시 새 토큰 발급
+[수정] PATCH /api/notice/update/{id}
+  → NoticeService.update()
+    1. repository.findById(id) → 없으면 NoticeException(NOT_FOUND)
+    2. null이 아닌 필드만 선택적 업데이트 (title / contents / author)
+    3. 이미지 교체: notice.clearImages() → 새 이미지 재연결
+    4. repository.update(notice) → DB 저장
+    반환: 업데이트된 NoticeDetailRes (S3 URL 포함)
 
-[로그아웃]
-  → RefreshToken 삭제
-  → AccessToken 남은 TTL만큼 블랙리스트 등록 (Redis key: AccessToken 값)
-  → JwtAuthenticationFilter: 매 요청마다 블랙리스트 여부 확인
+[조회] GET /api/notice/read/{id}
+  → NoticeService.readDetails()
+    1. repository.findById(id) → Notice 조회
+    2. exportS3Url(image) 함수로 S3 키 → 공개 URL 변환
+    3. NoticeDetailRes.toDto(notice, urlGenerator) → 응답
+       (date: updatedAt 우선, 없으면 createdAt)
 ```
 
-### 결제 검증 흐름
+### 프로모션 흐름 (모놀리식) — Coupon 연동 포함
+
+코드 근거: `src/main/java/.../head_office/promotion/` + `.../coupon/`
 
 ```
-[POS] 결제 완료 후 paymentId 전송
-  → PaymentService.validatePayment()
-    1. PortOne 서버에서 실제 결제 정보 조회 (fetchAndValidatePortOnePayment)
-    2. 결제 상태 검증 (PaidPayment 여부)
-    3. 서버 계산 금액 vs PortOne 실제 금액 비교
-    4. 불일치 시 → portOneService.cancelPayment() 자동 취소 + 예외 throw
-    5. 일치 시 → 재고 차감 + 영수증 생성 + Payments 엔티티 저장
-    6. 쿠폰 사용 처리 (customerCoupon.useCoupon())
+[생성] POST /api/promotion/create  (@PreAuthorize ADMIN·MANAGER)
+  → PromotionService.createPromotion(PromotionCreateReq)
+    1. couponRepository.findById(couponId)
+       → Coupon 조회 (없으면 CouponException)
+    2. dto.toEntity(coupon) → Promotion 엔티티 생성
+       (coupon_id FK로 Coupon 객체 직접 연결)
+    3. ImageService로 이미지 S3 저장
+    4. 각 Image → PromotionImages 생성 후 연결
+    5. promotion.autoUpdateStatus() — 날짜 기반 자동 상태 결정
+         now < startDate  → UPCOMING
+         startDate ≤ now ≤ endDate  → ONGOING
+         now > endDate  → ENDED
+       (단, 이미 ENDED면 자동 갱신 건너뜀)
+    6. repository.createPromotion() → DB 저장
+
+[수정] PATCH /api/promotion/update/{id}
+  → PromotionService.update()
+    1. repository.findById(id) → Promotion + 연결된 Coupon 조회
+    2. 쿠폰 변경 여부 판단:
+         couponId != promotion.getCoupon().getId()
+         → couponRepository.findById(newCouponId)
+         → promotion.updateCoupon(newCoupon)
+    3. 상태 처리:
+         status == ENDED → promotion.updateStatus(ENDED) (수동 종료)
+         else → promotion.autoUpdateStatus() (날짜 재계산)
+    4. 이미지 교체 + repository.update() → DB 저장
+    반환: PromotionInfoRes (couponId · couponName · couponType 포함)
+
+[검색] GET /api/promotion/search?keyword=세일&status=진행중
+  → PromotionService.search()
+    QueryDSL BooleanBuilder로 동적 조건 구성:
+      keyword → title.contains(keyword).or(contents.contains(keyword))
+      status  → promotion.status.eq(PromotionStatus)
+    결과 PromotionInfoRes에 연결된 쿠폰 정보 함께 응답:
+      couponType (PERCENTAGE / FIXED) · couponName · couponId
 ```
 
-### 발주 동시성 제어 흐름
+### 공지사항 흐름 (MSA · 헥사고날) — api-notice 기준
 
+코드 근거: `api-notice/src/main/java/com/example/apinotice/notice/`
+
+헥사고날 레이어 구조:
 ```
-[매장] 발주 승인 요청
-  → PurchaseOrderService.update()
-    1. 비관적 락 (PESSIMISTIC_WRITE) 으로 ItemDetail/StoreItemDetail 조회
-    2. 재고 업데이트 (updateStock)
-    3. LockTimeoutException / PessimisticLockException 발생 시
-       → 최대 3회 재시도 (지연: 200ms × 시도 횟수)
-    4. 3회 초과 시 BaseException throw
+외부 HTTP → [인바운드 어댑터] → (WebPort) → [UseCase] → (NoticePersistencePort) → [아웃바운드 어댑터] → DB
+             WebAdaptor                    NoticeUseCase                          NoticePersistenceAdaptor
 ```
 
-### CI/CD 파이프라인 흐름
-
 ```
-[GitHub main 브랜치 push]
-  → Jenkins WebHook 트리거
-  → K8s Pod 생성 (gradle:8.9-jdk17 + kaniko 컨테이너)
-  → Checkout (main branch)
-  → Gradle Build: ./gradlew clean bootJar
-  → Kaniko: Dockerfile 기반 이미지 빌드 → DockerHub push
-      (raccoon98/hypelink-back:{BUILD_NUMBER}, :latest)
-  → SSH → K8S_MASTER
-      현재 Service selector 확인 (blue or green)
-      → 비활성 색상 Deployment 배포 (replicas: 2)
-      → kubectl rollout status 대기 (timeout 600s)
-      → Service selector 전환 (ver: newColor)
-      → 이전 Deployment replicas: 0 스케일다운
-  → Discord Webhook 알림 (성공/실패)
+[생성] POST /api/notice/create
+  ── 인바운드 어댑터 (WebAdaptor) ──
+    1. HTTP 요청 → NoticeSaveCommand 생성
+    2. WebPort.create(command) 호출 (인터페이스 경계)
+  ── UseCase (NoticeUseCase) ──
+    3. NoticeMapper.toDomain(command) → Notice 도메인 모델 변환
+       (isOpen 기본값 false 설정)
+    4. NoticePersistencePort.create(notice) 호출 (아웃바운드 포트 경계)
+  ── 아웃바운드 어댑터 (NoticePersistenceAdaptor) ──
+    5. NoticeMapper.toEntity(notice) → NoticeEntity 변환
+    6. 각 NoticeImage → NoticeImageEntity 생성
+       noticeEntity.addImageEntity(imgEntity) — 양방향 관계 설정
+    7. NoticeRepository.save(noticeEntity)
+       (CASCADE ALL → NoticeImageEntity 함께 저장)
+
+[수정] PATCH /api/notice/update/{id}
+  ── WebAdaptor ──
+    1. NoticeUpdateCommand 수신 → WebPort.update(id, command) 호출
+  ── NoticeUseCase ──
+    2. noticePersistencePort.findById(id) → Notice 도메인 모델 조회
+       (없으면 NoticeException(NOTICE_NOT_FOUND))
+    3. null이 아닌 필드만 도메인 메서드로 업데이트:
+         notice.updateTitle() / updateContents() / updateAuthor()
+    4. notice.clearImages() → 새 이미지 목록 설정
+    5. noticePersistencePort.update(notice) 호출
+  ── NoticePersistenceAdaptor ──
+    6. noticeRepository.findById(id) → NoticeEntity 조회
+    7. entity.updateFields() — 필드 반영
+    8. entity.clearImages() — orphanRemoval로 기존 이미지 자동 삭제
+    9. 새 NoticeImageEntity 추가 후 save()
+    반환: 도메인 모델 → NoticeInfoDto 변환 후 응답
+
+[의존성 역전 — 핵심 원칙]
+  도메인(Notice)은 DB·HTTP를 전혀 모름
+  UseCase는 인터페이스(Port)에만 의존 → 구현체 교체 가능
+  Mapper가 도메인 ↔ 엔티티 ↔ Command 간 변환 전담
+  Eureka 서비스 디스커버리 자동 등록 (MSA Pod IP 기반)
 ```
 
 ---
