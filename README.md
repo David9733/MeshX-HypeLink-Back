@@ -221,7 +221,7 @@
 
 **Backend** : Java 17, Spring Boot 3.5.6, Spring Security, Spring Data JPA, Spring WebSocket, Spring WebFlux,<br>Spring Retry + AOP, Spring Actuator, JWT (jjwt 0.11.5), QueryDSL 5.1.0, PortOne Server SDK 0.21.0,<br>Springdoc OpenAPI 2.8.4, Lombok
 
-**CI/CD** : Jenkins (K8s), Kaniko (executor:debug), Kubernetes, Gradle 8.9-jdk17, DockerHub, Discord Webhook
+**CI/CD** : GitHub, Jenkins (K8s), Kaniko (executor:debug), Kubernetes, Gradle 8.9-jdk17, DockerHub, Discord Webhook
 
 ![Java](https://img.shields.io/badge/Java_17-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot_3.5.6-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)
@@ -233,6 +233,7 @@
 ![QueryDSL](https://img.shields.io/badge/QueryDSL_5.1.0-0285C7?style=for-the-badge&logoColor=white)
 ![Swagger](https://img.shields.io/badge/Swagger_2.8.4-85EA2D?style=for-the-badge&logo=swagger&logoColor=black)
 ![Lombok](https://img.shields.io/badge/Lombok-red?style=for-the-badge&logoColor=white)
+![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)
 ![Jenkins](https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=jenkins&logoColor=white)
 ![Kubernetes](https://img.shields.io/badge/Kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
