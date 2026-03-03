@@ -409,7 +409,7 @@
 |------|------|------|
 | 공지사항 관리 | `head_office/notice/service/NoticeService.java` | 공지 CRUD 전체 구현<br>수정 시 null이 아닌 필드만 선택<br>업데이트 불필요한 덮어쓰기 방지 |
 | 공지 페이징 | `head_office/notice/service/NoticeService.java` | 공통 페이징 유틸 설계 및 적용<br>응답 구조 통일 |
-| 프로모션 상태 자동화 | `head_office/promotion/model/entity/Promotion.java` | startDate/endDate 비교해<br> UPCOMING·ONGOING·ENDED<br> 자동 결정 관리자가 ENDED 처리한 경우 자동 갱신 제외 |
+| 프로모션 상태 자동화 | `head_office/promotion/model/entity/Promotion.java` | startDate/endDate 비교해<br> UPCOMING·ONGOING·ENDED<br> 자동 결정 관리자가 ENDED<br>한 경우 자동 갱신 제외 |
 | 프로모션 쿠폰 연결 | `head_office/promotion/service/PromotionService.java` | couponId로 조회 후 FK 연결<br>수정 요청 시 기존 ID와 비교해 변경된 경우에만 교체 |
 | 프로모션 검색 | `head_office/promotion/repository/PromotionJpaRepositoryVerify.java` | QueryDSL로 키워드·상태 조건 동적 조합<br>조건 없는 항목은 쿼리에서 자동 제외되어 불필요한 전체 조회 방지 |
 | 프로모션 상태 목록 | `head_office/promotion/service/PromotionService.java` | `PromotionStatus.values()`로 enum 전체 순회 후 한글 description 추출<br>DB 접근 없이 고정값(예정·진행중·종료)을 DTO로 변환해 반환 |
