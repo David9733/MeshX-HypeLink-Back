@@ -407,7 +407,7 @@
 
 <table>
 <thead>
-<tr><th>항목</th><th>위치</th><th>설명</th></tr>
+<tr><th width="160">항목</th><th width="340">위치</th><th>설명</th></tr>
 </thead>
 <tbody>
 <tr>
