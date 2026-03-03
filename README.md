@@ -102,10 +102,7 @@
 ```
   → NoticeService.createNotice(NoticeCreateReq)
     1. dto.toEntity() → Notice 엔티티 생성 (isOpen 기본값: false)
-    2. ImageService로 S3 키 기반 Image 엔티티 생성 → imageRepository.saveAll() (Image 테이블 별도 저장)
-       (S3 업로드는 Presigned URL로 클라이언트가 직접 처리)
-    3. 각 Image → NoticeImages 생성 후 notice.addNoticeImage() 연결
-    4. NoticeJpaRepositoryVerify.createNotice() → Notice + NoticeImages DB 저장 (CASCADE ALL)
+    2. NoticeJpaRepositoryVerify.createNotice() → Notice DB 저장 (CASCADE ALL)
 ```
 
 - [수정] PATCH /api/notice/update/{id}
@@ -113,16 +110,14 @@
   → NoticeService.update()
     1. repository.findById(id) → 없으면 NoticeException(NOT_FOUND)
     2. null이 아닌 필드만 선택적 업데이트 (title / contents / author / isOpen)
-    3. 이미지 교체: notice.clearImages() → orphanRemoval로 기존 이미지 DB 삭제 후 새 이미지 재연결
-    4. repository.update(notice) → DB 저장
-    반환: 업데이트된 NoticeDetailRes (S3 URL 포함)
+    3. repository.update(notice) → DB 저장
+    반환: 업데이트된 NoticeDetailRes
 ```
 - [조회] GET /api/notice/read/{id}
 ```
   → NoticeService.readDetails()
     1. repository.findById(id) → Notice 조회
-    2. exportS3Url(image) 함수로 S3 키 → 공개 URL 변환
-    3. NoticeDetailRes.toDto(notice, urlGenerator) → 응답
+    2. NoticeDetailRes.toDto(notice) → 응답
        (date: updatedAt 우선, 없으면 createdAt)
 ```
 - [전체 조회] GET /api/notice/read/all
@@ -157,14 +152,12 @@
        → Coupon 조회 (없으면 CouponException)
     2. dto.toEntity(coupon) → Promotion 엔티티 생성
        (coupon_id FK로 Coupon 객체 직접 연결)
-    3. ImageService로 이미지 S3 저장
-    4. 각 Image → PromotionImages 생성 후 연결
-    5. promotion.autoUpdateStatus() — 날짜 기반 자동 상태 결정
+    3. promotion.autoUpdateStatus() — 날짜 기반 자동 상태 결정
          now < startDate  → UPCOMING
          startDate ≤ now ≤ endDate  → ONGOING
          now > endDate  → ENDED
        (단, 이미 ENDED면 자동 갱신 건너뜀)
-    6. repository.createPromotion() → DB 저장
+    4. repository.createPromotion() → DB 저장
 ```
 - [수정] PATCH /api/promotion/update/{id}
 ```
@@ -177,7 +170,7 @@
     4. 쿠폰 변경 여부 판단:
          요청의 쿠폰 ID와 기존 쿠폰 ID가 다를 경우
          → couponRepository.findById(couponId) → promotion.updateCoupon(coupon)
-    5. 이미지 교체 + repository.update() → DB 저장
+    5. repository.update() → DB 저장
     반환: PromotionInfoRes (couponId · couponName · couponType 포함)
 ```
 - [검색] GET /api/promotion/search
@@ -195,7 +188,6 @@
   → PromotionService.readList()
     1. repository.findAll() → Promotion 목록 조회
        (없으면 PromotionException(NOT_FOUND))
-    2. exportS3Url(image) → S3 URL 변환
     반환: PromotionInfoListRes
 ```
 - [목록 조회 (페이징)] GET /api/promotion/read/page/all
@@ -211,7 +203,6 @@
   → PromotionService.readDetails(id)
     1. repository.findById(id) → Promotion + 연결된 Coupon 조회
        (없으면 PromotionException(NOT_FOUND))
-    2. exportS3Url(image) → S3 URL 변환
     반환: PromotionInfoRes (couponId · couponName · couponType 포함)
 ```
 - [삭제] DELETE /api/promotion/delete/{id}
@@ -238,15 +229,10 @@
   [ UseCase (NoticeUseCase) ]
     3. NoticeMapper.toDomain(command) → Notice 도메인 모델 변환
        (isOpen 기본값 false 설정)
-       이미지: NoticeImageCreateCommand 목록 → NoticeImage 도메인 목록 변환
-       (S3 업로드는 Presigned URL로 클라이언트가 직접 처리; 서버는 s3Key 수신)
     4. NoticePersistencePort.create(notice) 호출 (아웃바운드 포트 경계)
   [ 아웃바운드 어댑터 (NoticePersistenceAdaptor) ]
     5. NoticeMapper.toEntity(notice) → NoticeEntity 변환
-    6. 각 NoticeImage → NoticeImageEntity 생성 (s3Key·originalFilename·contentType·fileSize 저장)
-       noticeEntity.addImageEntity(imgEntity) - 양방향 관계 설정
-    7. NoticeRepository.save(noticeEntity)
-       (CASCADE ALL → NoticeImageEntity 함께 저장)
+    6. NoticeRepository.save(noticeEntity) (CASCADE ALL)
 ```
 - [수정] PATCH /api/notice/update/{id}
 ```
@@ -257,14 +243,10 @@
        (없으면 NoticeException(NOTICE_NOT_FOUND))
     3. null이 아닌 필드만 도메인 메서드로 업데이트:
          notice.updateTitle() / updateContents() / updateAuthor() / changeOpen()
-    4. notice.clearImages() → 도메인 모델 이미지 목록 메모리 초기화 (DB 접근 없음)
-       새 NoticeImage 목록 도메인 모델에 추가
-    5. noticePersistencePort.update(notice) 호출
+    4. noticePersistencePort.update(notice) 호출
   [ NoticePersistenceAdaptor ]
-    6. noticeRepository.findById(id) → NoticeEntity 조회
-    7. entity.updateFields() - 필드 반영
-    8. entity.clearImages() → JPA 엔티티 컬렉션 비우기 (orphanRemoval로 기존 이미지 DB 삭제)
-    9. 새 NoticeImageEntity 추가 후 save()
+    5. noticeRepository.findById(id) → NoticeEntity 조회
+    6. entity.updateFields() → 필드 반영 후 save()
     반환: 도메인 모델 → NoticeInfoDto 변환 후 응답
 ```
 - [조회] GET /api/notice/read/{id}
@@ -278,8 +260,7 @@
        (없으면 NoticeException(NOTICE_NOT_FOUND))
     4. NoticeMapper.toDomain(entity) → Notice 도메인 모델 반환
   [ NoticeUseCase — 반환 처리 ]
-    5. NoticeInfoDto.toDto(notice) → 이미지 URL은 NoticeImageInfoDto 내부에서
-       "/" + s3Key 조합으로 구성 (MSA는 S3UrlBuilder 미사용)
+    5. NoticeInfoDto.toDto(notice) → 응답
     반환: 도메인 모델 → NoticeInfoDto 변환 후 응답
        (date: updatedAt 우선, 없으면 createdAt)
 ```
