@@ -407,14 +407,14 @@
 
 | 항목 | 위치 | 설명 |
 |------|------|------|
-| 공지사항 관리 | `notice/service/NoticeService.java` | 공지 CRUD 전체 구현<br>수정 시 null이 아닌 필드만 선택<br>업데이트 불필요한 덮어쓰기 방지 |
+| 공지사항<br> 관리 | `notice/service/NoticeService.java` | 공지 CRUD 전체 구현<br>수정 시 null이 아닌 필드만 선택<br>업데이트 불필요한 덮어쓰기 방지 |
 | 페이징 | `notice/service/NoticeService.java` | 공통 페이징 유틸 설계 및 적용<br>응답 구조 통일 |
-| 프로모션<br> 상태 자동화 | `promotion/model/entity/Promotion.java` | startDate/endDate 비교해<br> UPCOMING·ONGOING·ENDED<br> 자동 결정 관리자가 ENDED<br>한 경우 자동 갱신 제외 |
-| 프로모션 쿠폰 연결 | `promotion/service/PromotionService.java` | couponId로 조회 후 FK 연결<br>수정 요청 시 기존 ID와 비교해<br>변경된 경우에만 교체 |
-| 프로모션 검색 | `promotion/repository/PromotionJpaRepositoryVerify.java` | QueryDSL로 키워드·상태 조건<br>동적 조합<br>조건 없는 항목은 쿼리 자동 제외되어<br>불필요한 전체 조회 방지 |
-| 프로모션 상태 목록 | `promotion/service/PromotionService.java` | `PromotionStatus.values()`로 enum<br> 전체 순회 후 한글 description 추출<br>DB 접근 없이 (예정·진행중·종료)을<br> DTO로 변환해 반환 |
-| 헥사고날 구조 | `notice/usecase/port/NoticeUseCase.java`<br>`notice/adaptor/in/WebAdaptor.java`<br>`notice/adaptor/out/NoticePersistenceAdaptor.java` | WebAdaptor → UseCase → PersistenceAdaptor 계층 분리<br>포트 인터페이스로 의존성 역전<br> 도메인 로직이 외부 기술에<br> 의존하지 않는 구조 설계 |
-| 도메인 매퍼 | `notice/adaptor/out/mapper/NoticeMapper.java` | Entity·Command·Domain 간 변환을 Mapper 한 곳에 집중<br>레이어 경계에서 객체 변환 책임을<br> 명확히 분리해 의존성 오염 방지 |
+| 프로모션<br>상태<br>자동화 | `promotion/model/entity/Promotion.java` | startDate/endDate 비교해<br> UPCOMING·ONGOING·ENDED<br> 자동 결정 관리자가 ENDED<br>한 경우 자동 갱신 제외 |
+| 프로모션<br>쿠폰연결 | `promotion/service/PromotionService.java` | couponId로 조회 후 FK 연결<br>수정 요청 시 기존 ID와 비교해<br>변경된 경우에만 교체 |
+| 프로모션<br>검색 | `promotion/repository/PromotionJpaRepositoryVerify.java` | QueryDSL로 키워드·상태 조건<br>동적 조합<br>조건 없는 항목은 쿼리 자동 제외되어<br>불필요한 전체 조회 방지 |
+| 프로모션<br>상태목록 | `promotion/service/PromotionService.java` | `PromotionStatus.values()`로 enum<br> 전체 순회 후 한글 description 추출<br>DB 접근 없이 (예정·진행중·종료)을<br> DTO로 변환해 반환 |
+| 헥사고날<br>구조 | `notice/usecase/port/NoticeUseCase.java`<br>`notice/adaptor/in/WebAdaptor.java`<br>`notice/adaptor/out/NoticePersistenceAdaptor.java` | WebAdaptor → UseCase → PersistenceAdaptor 계층 분리<br>포트 인터페이스로 의존성 역전<br> 도메인 로직이 외부 기술에<br> 의존하지 않는 구조 설계 |
+| 도메인<br>매퍼 | `notice/adaptor/out/mapper/NoticeMapper.java` | Entity·Command·Domain 간 변환을 Mapper 한 곳에 집중<br>레이어 경계에서 객체 변환 책임을<br> 명확히 분리해 의존성 오염 방지 |
 
 ### 주요 화면
 
