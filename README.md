@@ -215,8 +215,14 @@
 - [상태 목록] GET /api/promotion/status
 ```
   → PromotionService.readStatus()
-    1. PromotionStatus enum 스트리밍 → 각 상태 PromotionStatusInfoRes 변환
+    1. PromotionStatus.values() → enum 전체 배열 [UPCOMING, ONGOING, ENDED] 반환
+    2. stream()으로 순회하며 각 항목의 description(한글) 추출
+         UPCOMING → "예정"
+         ONGOING  → "진행중"
+         ENDED    → "종료"
+    3. 각 항목을 PromotionStatusInfoRes { description } DTO로 변환
     반환: PromotionStatusListRes (DB 접근 없음)
+           promotionStatusInfos: ["예정", "진행중", "종료"] 고정값
 ```
 
 ### 공지사항 흐름 (MSA · 헥사고날) [구조확인](https://github.com/beyond-sw-camp/be17-fin-MeshX-HypeLink-BE/tree/Swagger/MSA/api-notice/src/main/java/com/example/apinotice/notice)
