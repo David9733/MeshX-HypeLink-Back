@@ -300,7 +300,7 @@
 
 **Backend** : Java 17, Spring Boot 3.5.6, Spring Security, Spring Data JPA, Spring WebSocket, Spring WebFlux,<br>Spring Retry + AOP, Spring Actuator, JWT (jjwt 0.11.5), QueryDSL 5.1.0, PortOne Server SDK 0.21.0,<br>Springdoc OpenAPI 2.8.4, Lombok
 
-**CI/CD** : GitHub, Jenkins (K8s), Kaniko (executor:debug), Kubernetes, Gradle 8.9-jdk17, DockerHub, Discord Webhook
+**CI/CD** : GitHub, Jenkins (K8s), Kaniko (executor:debug), Kubernetes, Gradle, DockerHub, Discord Webhook
 
 ![Java](https://img.shields.io/badge/Java_17-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot_3.5.6-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)
@@ -316,7 +316,7 @@
 ![Jenkins](https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=jenkins&logoColor=white)
 ![Kubernetes](https://img.shields.io/badge/Kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
-![Gradle](https://img.shields.io/badge/Gradle_8.9--jdk17-02303A?style=for-the-badge&logo=gradle&logoColor=white)
+![Gradle](https://img.shields.io/badge/Gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white)
 ![DockerHub](https://img.shields.io/badge/DockerHub-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 ![Discord](https://img.shields.io/badge/Discord_Webhook-5865F2?style=for-the-badge&logo=discord&logoColor=white)
 
