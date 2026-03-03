@@ -408,7 +408,7 @@
 | 항목 | 위치 | 설명 |
 |------|------|------|
 | 공지사항<br> 관리 | `notice/service/NoticeService.java` | 공지 CRUD 전체 구현<br>수정 시 null이 아닌 필드만 선택<br>업데이트 불필요한 덮어쓰기 방지 |
-| 페이징 | `/service/NoticeService.java` | 공통 페이징 유틸 설계 및 적용<br>응답 구조 통일 |
+| 페이징 | `common/PageReq.java`<br>`common/PageRes.java` | 공통 페이징 유틸 설계 및 적용<br>응답 구조 통일 |
 | 프로모션<br>상태<br>자동화 | `promotion/model/entity/Promotion.java` | startDate/endDate 비교해<br> UPCOMING·ONGOING·ENDED<br> 자동 결정 관리자가 ENDED<br>한 경우 자동 갱신 제외 |
 | 프로모션<br>쿠폰연결 | `promotion/service/PromotionService.java` | couponId로 조회 후 FK 연결<br>수정 요청 시 기존 ID와 비교해<br>변경된 경우에만 교체 |
 | 프로모션<br>검색 | `promotion/repository/PromotionJpaRepositoryVerify.java` | QueryDSL로 키워드·상태 조건<br>동적 조합<br>조건 없는 항목은 쿼리 자동 제외되어<br>불필요한 전체 조회 방지 |
