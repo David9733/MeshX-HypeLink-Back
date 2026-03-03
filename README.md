@@ -405,16 +405,32 @@
 
 ## 🔑 핵심 메서드 (대표 파트)
 
+### 공지 모놀리식
+
 | 메서드 | 위치 | 설명 |
 |--------|------|------|
-| `register()` | `auth/service/AuthService.java` | 역할별 계정 생성 분기 (POS 코드 검증, 매장 등록 시 지오코딩 포함) |
-| `login()` | `auth/service/AuthService.java` | 비밀번호 검증 + Access/Refresh Token 발급 |
-| `logout()` | `auth/service/AuthService.java` | RT 삭제 + AT 블랙리스트 등록 (잔여 TTL 기준) |
-| `blacklistToken()` | `auth/service/RedisTokenStore.java` | Redis에 AccessToken을 잔여 만료시간만큼 저장 |
-| `validatePayment()` | `direct_store/payment/service/PaymentService.java` | PortOne 실제 결제 조회 → 금액 검증 → 실패 시 자동 취소 |
-| `createReceiptAndPayment()` | `direct_store/payment/service/PaymentService.java` | 재고 차감 + 영수증 생성 + Payments 저장 동일 트랜잭션 처리 |
-| `update()` | `head_office/order/service/PurchaseOrderService.java` | 비관적 락 + 최대 3회 재시도 (200ms × n backoff) 발주 승인 |
-| `connecting()` | `head_office/shipment/service/ShipmentService.java` | 배송 기사 배정 + ShipmentStatus.DRIVER_ASSIGNED 상태 전이 |
+| `createNotice()` | `head_office/notice/service/NoticeService.java` | DTO → 엔티티 변환 후 CASCADE 저장 |
+| `update()` | `head_office/notice/service/NoticeService.java` | null이 아닌 필드만 도메인 메서드로 선택 수정 |
+
+### 프로모션 모놀리식
+
+| 메서드 | 위치 | 설명 |
+|--------|------|------|
+| `createPromotion()` | `head_office/promotion/service/PromotionService.java` | 쿠폰 조회 후 FK 연결, autoUpdateStatus() 호출해 날짜 기반 초기 상태 결정 후 저장 |
+| `autoUpdateStatus()` | `head_office/promotion/model/entity/Promotion.java` | 현재 시각과 startDate/endDate 비교 → UPCOMING/ONGOING/ENDED 자동 결정 (수동 ENDED 제외) |
+| `update()` | `head_office/promotion/service/PromotionService.java` | 필드 선택 수정 + 상태 재계산 + 쿠폰 ID 변경 시 쿠폰 교체 |
+| `search()` | `head_office/promotion/repository/PromotionJpaRepositoryVerify.java` | QueryDSL BooleanBuilder로 키워드·상태 조건 동적 조합 검색 |
+| `readStatus()` | `head_office/promotion/service/PromotionService.java` | PromotionStatus enum 순회 → 한글 description DTO 변환 (DB 접근 없음) |
+
+### 공지 MSA · 헥사고날
+
+| 메서드 | 위치 | 설명 |
+|--------|------|------|
+| `create()` | `notice/usecase/port/NoticeUseCase.java` | NoticeSaveCommand → Domain 변환 후 NoticePersistencePort 경계로 저장 위임 |
+| `update()` | `notice/usecase/port/NoticeUseCase.java` | PersistencePort로 Domain 조회 → 도메인 메서드로 선택 수정 → Port 통해 저장 |
+| `create()` | `notice/adaptor/out/NoticePersistenceAdaptor.java` | Domain → NoticeEntity 변환 후 JPA 저장 |
+| `update()` | `notice/adaptor/out/NoticePersistenceAdaptor.java` | Entity 필드 업데이트 후 저장 |
+| `toDomain()` | `notice/adaptor/out/mapper/NoticeMapper.java` | NoticeEntity → Notice Domain 변환 |
 ### 주요 화면
 
 <details>
