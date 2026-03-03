@@ -247,7 +247,7 @@
     2. noticePersistencePort.findById(id) → Notice 도메인 모델 조회
        (없으면 NoticeException(NOTICE_NOT_FOUND))
     3. null이 아닌 필드만 도메인 메서드로 업데이트:
-         notice.updateTitle() / updateContents() / updateAuthor() / changeOpen()
+         notice.updateTitle() / updateContents() / updateAuthor() 
     4. noticePersistencePort.update(notice) 호출
   [ NoticePersistenceAdaptor ]
     5. noticeRepository.findById(id) → NoticeEntity 조회
