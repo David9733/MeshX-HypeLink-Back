@@ -101,7 +101,7 @@
 - [생성] POST /api/notice/create
 ```
   → NoticeService.createNotice(NoticeCreateReq)
-    1. dto.toEntity() → Notice 엔티티 생성 (isOpen 기본값: false)
+    1. dto.toEntity() → Notice 엔티티 생성
     2. NoticeJpaRepositoryVerify.createNotice() → Notice DB 저장 (CASCADE ALL)
 ```
 
@@ -109,7 +109,7 @@
 ```
   → NoticeService.update()
     1. repository.findById(id) → 없으면 NoticeException(NOT_FOUND)
-    2. null이 아닌 필드만 선택적 업데이트 (title / contents / author / isOpen)
+    2. null이 아닌 필드만 선택적 업데이트 (title / contents / author)
     3. repository.update(notice) → DB 저장
     반환: 업데이트된 NoticeDetailRes
 ```
@@ -228,7 +228,6 @@
     2. WebPort.create(command) 호출 (인터페이스 경계)
   [ UseCase (NoticeUseCase) ]
     3. NoticeMapper.toDomain(command) → Notice 도메인 모델 변환
-       (isOpen 기본값 false 설정)
     4. NoticePersistencePort.create(notice) 호출 (아웃바운드 포트 경계)
   [ 아웃바운드 어댑터 (NoticePersistenceAdaptor) ]
     5. NoticeMapper.toEntity(notice) → NoticeEntity 변환
