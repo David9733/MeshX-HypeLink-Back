@@ -195,7 +195,7 @@
   → PromotionService.readList(pageReq)
     1. repository.findAll(pageReq) → Page<Promotion> 조회
        (결과 없으면 PromotionException(NOT_FOUND))
-    2. PromotionInfoRes.toDtoPage(entityPage, urlGenerator) → Page<PromotionInfoRes> 변환
+    2. PromotionInfoRes.toDtoPage(entityPage) → Page<PromotionInfoRes> 변환
     반환: PageRes<PromotionInfoRes>
 ```
 - [상세 조회] GET /api/promotion/read/{id}
