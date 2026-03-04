@@ -339,65 +339,37 @@
 ## 🤔 기술 선택 이유
 
 <details>
-<summary>Backend
+<summary>Backend</summary>
 
-**Spring Boot 3.5.6 + Java 17**
-- LTS 버전 기반으로 안정성 확보
-- Records, Sealed Classes 등 최신 언어 기능 활용 가능
-
-**JWT + Redis 블랙리스트**
-- Stateless 토큰으로 수평 확장(K8s 멀티 레플리카)에 적합
-- 로그아웃 시 Access Token 즉시 무효화가 필요 → Redis TTL 기반 블랙리스트로 해결
-- Refresh Token은 Redis에 저장하여 탈취 시 서버 측 삭제 가능
-
-**PortOne Server SDK 0.21.0**
-- 서버 측 결제 금액 재검증 필수 (클라이언트 금액 위변조 방지)
-- SDK 제공 Cancel API로 검증 실패 시 자동 취소 원자성 구현
-
-**Spring Retry + AOP**
-- 비관적 락 경합 시 재시도를 별도 모듈로 분리하여 서비스 로직 오염 방지
-- LockTimeoutException 발생 시 점진적 backoff (200ms × n회) 적용
-
-**QueryDSL 5.1.0**
-- 복잡한 통계 쿼리(매장별·기간별 매출, 재고 조회)에서 타입 안전 동적 쿼리 필요
-- JPQL 문자열 방식 대비 컴파일 타임 오류 검출 가능
+| 선택 | 이유 |
+|------|------|
+| **Spring Boot 3.5.6 + Java 17** | LTS 버전 기반으로 안정성 확보. Records, Sealed Classes 등 최신 언어 기능 활용 가능 |
+| **JWT + Redis 블랙리스트** | Stateless 토큰으로 수평 확장(K8s 멀티 레플리카)에 적합. 로그아웃 시 Access Token 즉시 무효화가 필요 → Redis TTL 기반 블랙리스트로 해결. Refresh Token은 Redis에 저장하여 탈취 시 서버 측 삭제 가능 |
+| **PortOne Server SDK 0.21.0** | 서버 측 결제 금액 재검증 필수(클라이언트 금액 위변조 방지). SDK 제공 Cancel API로 검증 실패 시 자동 취소 원자성 구현 |
+| **Spring Retry + AOP** | 비관적 락 경합 시 재시도를 별도 모듈로 분리하여 서비스 로직 오염 방지. LockTimeoutException 발생 시 점진적 backoff(200ms × n회) 적용 |
+| **QueryDSL 5.1.0** | 복잡한 통계 쿼리(매장별·기간별 매출, 재고 조회)에서 타입 안전 동적 쿼리 필요. JPQL 문자열 방식 대비 컴파일 타임 오류 검출 가능 |
 
 </details>
 
 <details>
-<summary>CI/CD
+<summary>CI/CD</summary>
 
-**Kaniko (Docker 데몬 없는 빌드)**
-- K8s 환경에서 privileged 권한 없이 컨테이너 내부 이미지 빌드 가능
-- DinD(Docker-in-Docker) 대비 보안 위험 없음
-
-**Blue-Green 배포 전략**
-- 무중단 배포 필수: 매장 POS 결제 흐름 중 재시작 불가
-- Service selector 전환으로 즉시 트래픽 절환, 이슈 발생 시 이전 색상으로 롤백 가능
-
-**Jenkins in Kubernetes**
-- 빌드마다 격리된 Pod 생성 → 빌드 간 환경 오염 없음
-- Gradle 캐시 볼륨 마운트로 반복 빌드 속도 개선
-
-**Discord Webhook 알림**
-- 팀 협업 채널에 빌드 결과 자동 전송 → 배포 상태 실시간 공유
+| 선택 | 이유 |
+|------|------|
+| **Kaniko** | K8s 환경에서 privileged 권한 없이 컨테이너 내부 이미지 빌드 가능. DinD(Docker-in-Docker) 대비 보안 위험 없음 |
+| **Blue-Green 배포 전략** | 무중단 배포 필수: 매장 POS 결제 흐름 중 재시작 불가. Service selector 전환으로 즉시 트래픽 절환, 이슈 발생 시 이전 색상으로 롤백 가능 |
+| **Jenkins in Kubernetes** | 빌드마다 격리된 Pod 생성 → 빌드 간 환경 오염 없음. Gradle 캐시 볼륨 마운트로 반복 빌드 속도 개선 |
+| **Discord Webhook 알림** | 팀 협업 채널에 빌드 결과 자동 전송 → 배포 상태 실시간 공유 |
 
 </details>
 
 <details>
-<summary>문서
+<summary>문서</summary>
 
-**MariaDB**
-- MySQL 호환 오픈소스 RDBMS로 K8s 환경 배포 용이
-- 트랜잭션 안정성 필요한 재고·결제·발주 도메인에 적합
-
-**Redis**
-- Token Store, 블랙리스트 모두 TTL 기반 자동 만료 지원
-- 인메모리 조회로 매 요청마다 발생하는 토큰 검증 지연 최소화
-
-**AWS S3 + Presigned URL**
-- 대용량 상품 이미지를 서버 경유 없이 클라이언트가 직접 업로드
-- 서버 부하 감소 및 업로드 속도 개선
+| 선택 | 이유 |
+|------|------|
+| **SpringDoc OpenAPI 2.8.4 (Swagger)** | Controller 어노테이션 기반으로 API 문서 자동 생성 → 코드와 문서 간 불일치 방지. 별도 문서 수동 관리 없이 Swagger UI로 즉시 테스트 가능 |
+| **GitHub README / Wiki** | 코드 저장소와 문서를 한 곳에서 관리하여 버전 이력 추적 가능. Markdown 기반으로 아키텍처·흐름·트러블슈팅 등 구조화된 문서 작성 용이 |
 
 </details>
 
