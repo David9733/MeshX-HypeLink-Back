@@ -343,9 +343,9 @@
 
 | 선택 | 이유 |
 |------|------|
-| **Spring Boot 3.5.6 + Java 17** | LTS 버전 기반으로 안정성 확보. Records, Sealed Classes 등 최신 언어 기능 활용 가능 |
-| **JWT + Redis 블랙리스트** | Stateless 토큰으로 수평 확장(K8s 멀티 레플리카)에 적합. 로그아웃 시 Access Token 즉시 무효화가 필요 → Redis TTL 기반 블랙리스트로 해결. Refresh Token은 Redis에 저장하여 탈취 시 서버 측 삭제 가능 |
-| **PortOne Server SDK 0.21.0** | 서버 측 결제 금액 재검증 필수(클라이언트 금액 위변조 방지). SDK 제공 Cancel API로 검증 실패 시 자동 취소 원자성 구현 |
+| **MSA (Microservice Architecture)** | 모놀리식 구조의 장애 전파·느린 배포 문제를 극복하기 위해 도입. api-auth, api-direct, api-item 등 기능별 서비스로 분리하여 독립 배포 및 장애 격리 실현. 인증 서비스 장애 시에도 상품 조회 등 다른 기능은 정상 동작 |
+| **API Gateway + Eureka** | 외부 요청의 단일 진입점으로 인증/인가·로깅 등 공통 기능을 일괄 처리. Eureka 서비스 디스커버리와 연동하여 IP 주소 대신 서비스 이름 기반 동적 라우팅 구현 |
+| **Kafka** | 결제·발주 등 처리 시간이 긴 작업을 비동기 메시지로 처리하여 응답 속도 개선. 서비스 간 직접 호출을 메시지 기반으로 대체해 결합도를 낮추고 처리량 향상 |
 | **Spring Retry + AOP** | 비관적 락 경합 시 재시도를 별도 모듈로 분리하여 서비스 로직 오염 방지. LockTimeoutException 발생 시 점진적 backoff(200ms × n회) 적용 |
 | **QueryDSL 5.1.0** | 복잡한 통계 쿼리(매장별·기간별 매출, 재고 조회)에서 타입 안전 동적 쿼리 필요. JPQL 문자열 방식 대비 컴파일 타임 오류 검출 가능 |
 
