@@ -298,7 +298,7 @@
 
 ## 🛠️ 기술 스택
 
-**Backend** : Java 17, Spring Boot 3.5.6, Spring Security, Spring Data JPA, Spring WebSocket, Spring WebFlux,<br>Spring Retry + AOP, Spring Actuator, JWT (jjwt 0.11.5), QueryDSL 5.1.0, PortOne Server SDK 0.21.0, Lombok,<br>Springdoc OpenAPI 2.8.4, Lombok
+**Backend** : Java 17, Spring Boot 3.5.6, Spring Security, Spring Data JPA, Spring WebSocket, Spring WebFlux,<br>Spring Retry + AOP, Spring Actuator, JWT (jjwt 0.11.5), QueryDSL 5.1.0, PortOne Server SDK 0.21.0, Lombok,<br>Springdoc OpenAPI 2.8.4
 
 **CI/CD** : GitHub, Jenkins (K8s), Kaniko (executor:debug), Kubernetes, Gradle, DockerHub, Discord Webhook
 
@@ -432,23 +432,23 @@
 - **프로모션 FK 설계 오류** : 초기 설계에서 프로모션이 타입에 따라 옷·매장·카테고리 등 서로 다른 테이블을 가리키도록<br>구성되었습니다.
   한 컬럼이 상황에 따라 다른 테이블을 참조하는 FK 구조는 DB가 참조 대상을 특정할 수 없어 FK 제약 조건 자체를 걸 수 없고, 참조 무결성을 보장하지 못한다는 것을 파악했습니다.
   FK는 반드시 단일 부모 테이블을 가리켜야 한다는 관계형 DB 원칙에 따라 프로모션의 참조 대상을 쿠폰 단일 엔티티로 재설계해 해결했습니다.
-  이 경험으로 FK 설계 전 도메인 간 관계를 명확히 정의하지 않으면 DB 제약 조건 자체가 무너진다는 것을 체감했습니다.
+  이 경험으로 FK 설계 전<br>도메인 간 관계를 명확히 정의하지 않으면 DB 제약 조건 자체가 무너진다는 것을 체감했습니다.
 
 - **페이징 처리 위치 수정** : 초기에는 프론트엔드에서 전체 데이터를 받아 클라이언트 단에서 페이징을 처리했으나, 데이터가 늘어날수록 불필요한 데이터 전송과 렌더링 부하가 커졌습니다.
-  백엔드에서 페이징을 처리하도록 전환하고, 공통 페이징 유틸을 설계해 여러 API에 일관되게 적용했습니다.
+  백엔드에서 페이징을 처리하도록 전환하고, 공통 페이징<br>유틸을 설계해 여러 API에 일관되게 적용했습니다.
   또한 페이징 응답 구조를 통일해 프론트엔드에서 예측 가능한 형태로 데이터를 받을 수 있도록 했습니다.
   페이징은 프론트가 아닌 백엔드에서 처리해야 클라이언트 렌더링 부하와 네트워크 트래픽을 줄일 수 있다는 것을 깨달았습니다.
 
 ### CI/CD
 
 - **환경변수 반복 입력 제거** : 팀원마다 환경변수 설정값이 달라 로컬 실행 오류가 반복 발생했습니다.
-  로컬에서 프로젝트를 실행할 때마다 환경변수를 매번 직접 입력하거나 팀원 각자가 따로 관리해야 했습니다.
+  로컬에서 프로젝트를<br>실행할 때마다 환경변수를 매번 직접 입력하거나 팀원 각자가 따로 관리해야 했습니다.
   `.env` 파일을 만들어 팀 내부에서 공유하고, 실행 시 구성 편집기에서 파일을 선택하기만 하면 자동으로 적용되도록 했습니다.
   반복되는 사소한 불편도 한 번 정리해두면 팀 전체의 시간을 아낄 수 있다는 것을 깨달았습니다.
 
 ### 문서
 
-- **Swagger 문서 자동화** : 이전 프로젝트에서 Swagger 어노테이션을 일일이 손수 작성하다 보니 API가 늘어날수록 문서화에만 상당한 시간이 소요됐습니다.
+- **Swagger 문서 자동화** : 이전 프로젝트에서 Swagger 어노테이션을 일일이 손수 작성하다 보니 API가 늘어날수록<br>문서화에만 상당한 시간이 소요됐습니다.
   이번 프로젝트에서는 Gemini CLI, Claude CLI를 활용해 Controller 코드를 기반으로 자동 생성하는 방식으로 작업 속도를 높였습니다.
   반복적인 문서 작업에 AI를 보조 도구로 활용하면 핵심 로직 구현에 더 집중할 수 있다는 것을 체감했습니다.
 
