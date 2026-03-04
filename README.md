@@ -339,7 +339,7 @@
 ## 🤔 기술 선택 이유
 
 <details>
-<summary>Backend — Spring Boot / JWT+Redis / Spring Retry</summary>
+<summary>Backend
 
 **Spring Boot 3.5.6 + Java 17**
 - LTS 버전 기반으로 안정성 확보
@@ -365,7 +365,7 @@
 </details>
 
 <details>
-<summary>CI/CD — Kaniko / Blue-Green / Jenkins in K8s</summary>
+<summary>CI/CD
 
 **Kaniko (Docker 데몬 없는 빌드)**
 - K8s 환경에서 privileged 권한 없이 컨테이너 내부 이미지 빌드 가능
@@ -385,7 +385,7 @@
 </details>
 
 <details>
-<summary>Infra — MariaDB / Redis / AWS S3</summary>
+<summary>문서
 
 **MariaDB**
 - MySQL 호환 오픈소스 RDBMS로 K8s 환경 배포 용이
