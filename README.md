@@ -361,7 +361,7 @@
 | **Jenkins** | 빌드마다 격리된 Pod 생성으로 환경 오염 없음. Gradle 캐시 볼륨 마운트로 반복 빌드 속도 개선 |
 | **Ansible** | K8s 클러스터 구축·설정 자동화로 일관된 환경 구성 및 수작업 오류 제거 |
 | **Kaniko** | K8s 환경에서 privileged 권한 없이 이미지 빌드 가능하여 DinD 대비 보안 위험 제거 |
-| **Blue-Green 배포** | POS 결제 중 무중단 배포 필수. Health Check 통과 후 Service selector 전환, 즉각 롤백 가능 |
+| **Blue-Green 배포** | 배포 중 서비스 중단 없이 신버전으로 전환하고, 문제 발생 시 구버전으로 즉각 롤백 가능 |
 | **GitHub Webhook** | main 브랜치 Push 시 Jenkins로 이벤트를 자동 전달하여 파이프라인을 즉시 트리거 |
 | **Discord Webhook** | 빌드·배포 결과를 팀 채널에 자동 전송하여 배포 상태 실시간 공유 |
 
