@@ -357,13 +357,13 @@
 
 | 선택 | 이유 |
 |------|------|
-| **Kubernetes** | 물리 서버를 직접 클러스터로 구성하여 고가용성과 확장성 확보. 외부 클라우드 의존 없이 인프라 완전 제어 가능 |
-| **Ansible** | K8s 클러스터 구축·설정 자동화로 일관된 환경 구성. 반복 가능한 인프라 프로비저닝으로 수작업 오류 제거 |
-| **Jenkins** | 빌드마다 격리된 Pod 생성으로 빌드 간 환경 오염 없음. Gradle 캐시 볼륨 마운트로 반복 빌드 속도 개선 |
-| **Kaniko** | K8s 환경에서 privileged 권한 없이 컨테이너 내부 이미지 빌드 가능. DinD(Docker-in-Docker) 대비 보안 위험 없음. Dockerfile 직접 해석으로 이미지 레이어 최적화 |
-| **Blue-Green 배포** | 무중단 배포 필수: 매장 POS 결제 흐름 중 재시작 불가. 새 버전 Health Check 통과 후 Service selector 전환으로 즉시 트래픽 절환. 이슈 발생 시 이전 색상으로 즉각 롤백 가능 |
-| **GitHub Webhook** | main 브랜치 Push 시 Jenkins로 이벤트 자동 전달 → 파이프라인 자동 트리거. 수동 빌드 없이 코드 변경 즉시 배포 프로세스 시작 |
-| **Discord Webhook** | 팀 협업 채널에 빌드·배포 결과 자동 전송 → 배포 상태 실시간 공유 |
+| **Kubernetes** | 물리 서버를 직접 클러스터로 구성하여 고가용성·확장성 확보 및 인프라 완전 제어 |
+| **Ansible** | K8s 클러스터 구축·설정 자동화로 일관된 환경 구성 및 수작업 오류 제거 |
+| **GitHub Webhook** | main 브랜치 Push 시 Jenkins로 이벤트 자동 전달 → 파이프라인 자동 트리거 |
+| **Jenkins** | 빌드마다 격리된 Pod 생성으로 환경 오염 없음. Gradle 캐시 볼륨 마운트로 반복 빌드 속도 개선 |
+| **Kaniko** | K8s 환경에서 privileged 권한 없이 이미지 빌드 가능 → DinD 대비 보안 위험 제거 |
+| **Blue-Green 배포** | POS 결제 중 무중단 배포 필수. Health Check 통과 후 Service selector 전환, 즉각 롤백 가능 |
+| **Discord Webhook** | 빌드·배포 결과를 팀 채널에 자동 전송 → 배포 상태 실시간 공유 |
 
 </details>
 
