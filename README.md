@@ -9,17 +9,6 @@
 ---
 
 ## 📋 프로젝트 개요
-<div align="center">
-  <img src="https://github.com/user-attachments/assets/807a5735-e104-4bbe-adf5-b7a47830b0cf" width="400"/>
-</div>
-
-## 한 줄 소개
-
-실시간 배송 추적·재고 공유·권한 기반 중앙 관리를 통합한 B2B 직영점 운영 플랫폼
-
----
-
-## 📋 프로젝트 개요
 
 | 항목 | 내용 |
 |------|------|
