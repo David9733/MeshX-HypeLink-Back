@@ -463,7 +463,7 @@
 # 1. 빌드
 ./gradlew clean bootJar
 
-# 2. 실행 (환경변수 설정 후)
+# 2. 실행 
 java -jar build/libs/*.jar
 ```
 
