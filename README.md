@@ -372,7 +372,7 @@
 
 | 선택 | 이유 |
 |------|------|
-| **SpringDoc OpenAPI 2.8.4 (Swagger)** | Controller 어노테이션 기반으로 API 문서 자동 생성 → 코드와 문서 간 불일치 방지. 별도 문서 수동 관리 없이 Swagger UI로 즉시 테스트 가능 |
+| **Swagger** | Controller 어노테이션 기반으로 API 문서 자동 생성 → 코드와 문서 간 불일치 방지. 별도 문서 수동 관리 없이 Swagger UI로 즉시 테스트 가능 |
 | **GitHub README / Wiki** | 코드 저장소와 문서를 한 곳에서 관리하여 버전 이력 추적 가능. Markdown 기반으로 아키텍처·흐름·트러블슈팅 등 구조화된 문서 작성 용이 |
 
 </details>
@@ -452,6 +452,10 @@
 - **무중단 배포 — Blue-Green 전략 구현** : 배포 중 파드가 재시작되면 매장 POS 결제 흐름이 끊길 위험이 있었습니다.
   Blue-Green 배포 스크립트를 Jenkinsfile에 직접 구현해, 현재 활성 색상을 감지하고 비활성 Deployment에 신버전을 배포한 뒤 `rollout status` 대기 → Service selector 전환 → 구버전 replicas=0 순으로 처리했습니다.
   배포 전략 선택이 서비스 연속성과 사용자 경험에 직접적인 영향을 미친다는 것을 체감했습니다.
+
+### 문서
+
+- **dl**
 
 ---
 
