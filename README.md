@@ -298,7 +298,7 @@
 
 ## 🛠️ 기술 스택
 
-**Backend** : Java 17, Spring Boot 3.5.6, Spring Security, Spring Data JPA, Spring WebSocket, Spring WebFlux,<br>Spring Retry + AOP, Spring Actuator, JWT (jjwt 0.11.5), QueryDSL 5.1.0, PortOne Server SDK 0.21.0,<br>Springdoc OpenAPI 2.8.4, Lombok
+**Backend** : Java 17, Spring Boot 3.5.6, Spring Security, Spring Data JPA, Spring WebSocket, Spring WebFlux,<br>Spring Retry + AOP, Spring Actuator, JWT (jjwt 0.11.5), QueryDSL 5.1.0, PortOne Server SDK 0.21.0, Lombok,<br>Springdoc OpenAPI 2.8.4, Lombok
 
 **CI/CD** : GitHub, Jenkins (K8s), Kaniko (executor:debug), Kubernetes, Gradle, DockerHub, Discord Webhook
 
@@ -429,7 +429,7 @@
 
 ### Backend
 
-- **프로모션 FK 설계 오류** : 초기 설계에서 프로모션이 타입에 따라 옷·매장·카테고리 등 서로 다른 테이블을 가리키도록 구성되었습니다.
+- **프로모션 FK 설계 오류** : 초기 설계에서 프로모션이 타입에 따라 옷·매장·카테고리 등 서로 다른 테이블을 가리키도록<br>구성되었습니다.
   한 컬럼이 상황에 따라 다른 테이블을 참조하는 FK 구조는 DB가 참조 대상을 특정할 수 없어 FK 제약 조건 자체를 걸 수 없고, 참조 무결성을 보장하지 못한다는 것을 파악했습니다.
   FK는 반드시 단일 부모 테이블을 가리켜야 한다는 관계형 DB 원칙에 따라 프로모션의 참조 대상을 쿠폰 단일 엔티티로 재설계해 해결했습니다.
   이 경험으로 FK 설계 전 도메인 간 관계를 명확히 정의하지 않으면 DB 제약 조건 자체가 무너진다는 것을 체감했습니다.
