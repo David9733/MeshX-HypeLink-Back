@@ -14,7 +14,7 @@
 |------|------|
 | **진행 기간** | 2025.10 ~ 2025.11 |
 | **팀 인원** | 4명 |
-| **내 역할** | 공지·프로모션 API 구현, MSA+헥사고널 고도화,  CI·CD 품질 검증, Swagger·README 문서화 |
+| **내 역할** | 공지·프로모션 API 구현, MSA+헥사고널 고도화, CI·CD 품질 검증, Swagger·README 문서화 |
 | **핵심 기술** | Java, Spring Boot, JWT, Redis, PortOne, SpringDoc(Swagger), Kubernetes, Jenkins |
 
 ---
@@ -55,7 +55,7 @@
 
 - 공지 CRUD API 설계 및 구현
 - 프로모션 CRUD API 설계 및 구현
-- 공지 서비스를 헥사고날 + MSA 고도화 
+- 공지 서비스를 헥사고날 + MSA 고도화
 - 공통 페이징 유틸 설계 및 적용
 - Naver Maps API 연동 방식 조사 및 기술 검토
 
@@ -317,7 +317,6 @@
 ![Kubernetes](https://img.shields.io/badge/Kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 ![Gradle](https://img.shields.io/badge/Gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white)
-![DockerHub](https://img.shields.io/badge/DockerHub-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 ![Discord](https://img.shields.io/badge/Discord_Webhook-5865F2?style=for-the-badge&logo=discord&logoColor=white)
 
 ---
