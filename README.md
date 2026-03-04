@@ -469,7 +469,7 @@ java -jar build/libs/*.jar
 
 필요 환경변수: `DB_URL`, `DB_USERNAME`, `DB_PASSWORD`, `REDIS_URL`, `REDIS_PORT`, `JWT_KEY`, `JWT_ACCESS`, `JWT_REFRESH`, `S3_ACCESS_KEY`, `S3_SECRET_KEY`, `S3_BUCKET_NAME`, `S3_REGION`, `NAVER_MAP_CLIENT`, `NAVER_MAP_SECRET`, `PORTONE_STORE_ID`, `PORTONE_API_SECRET`, `SERVER` 등
 
-### CI/CD 파이프라인 트리거
+### CI/CD
 
 ```bash
 # main 브랜치 push 시 Jenkins WebHook 자동 실행
