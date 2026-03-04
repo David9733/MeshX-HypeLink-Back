@@ -343,13 +343,13 @@
 
 | 선택 | 이유 |
 |------|------|
-| **MSA (Microservice Architecture)** | 모놀리식 구조의 장애 전파·느린 배포 문제를 극복하기 위해 도입. api-auth, api-direct, api-item 등 기능별 서비스로 분리하여 독립 배포 및 장애 격리 실현. 인증 서비스 장애 시에도 상품 조회 등 다른 기능은 정상 동작 |
+| **MSA** | 모놀리식 구조의 장애 전파·느린 배포 문제를 극복하기 위해 도입. 기능별 서비스로 분리하여 독립 배포 및 장애 격리 실현. 인증 서비스 장애 시에도 상품 조회 등 다른 기능은 정상 동작 |
 | **API Gateway + Eureka** | 외부 요청의 단일 진입점으로 인증/인가·로깅 등 공통 기능을 일괄 처리. Eureka 서비스 디스커버리와 연동하여 IP 주소 대신 서비스 이름 기반 동적 라우팅 구현 |
 | **Kafka** | 결제·발주 등 처리 시간이 긴 작업을 비동기 메시지로 처리하여 응답 속도 개선. 서비스 간 직접 호출을 메시지 기반으로 대체해 결합도를 낮추고 처리량 향상 |
-| **헥사고날 아키텍처 (Ports & Adapters)** | 핵심 비즈니스 로직(Domain)이 외부 기술(Web, DB, Kafka)에 의존하지 않는 구조 구현. domain → usecase/port(인터페이스) → adapter(in: Controller, out: DB·Kafka) 계층 분리. DB 교체나 새로운 외부 기술 도입 시 핵심 로직 변경 없이 adapter만 교체 가능 |
+| **헥사고날** | 핵심 비즈니스 로직(Domain)이 외부 기술(Web, DB, Kafka)에 의존하지 않는 구조 구현. domain → usecase/port(인터페이스) → adapter(in: Controller, out: DB·Kafka) 계층 분리. DB 교체나 새로운 외부 기술 도입 시 핵심 로직 변경 없이 adapter만 교체 가능 |
 | **CQRS 패턴** | 복잡한 조회 쿼리가 쓰기 작업 성능에 영향을 주는 문제 해결. api-auth에서 조회(Query)·변경(Command) Controller·UseCase·Port·Adapter·Repository를 명확히 분리. 복잡한 동적 조회는 QueryDSL, 데이터 변경은 JPA로 역할 분담 |
-| **Feign Client + Circuit Breaker (Resilience4j)** | MSA 서비스 간 통신을 선언적 인터페이스(api-clients 모듈)로 정의하여 명확한 규약 확보. 외부 서비스 실패율 50% 초과 시 회로 차단(Open) → Fallback 수행으로 장애 전파 방지. Half-Open 상태에서 자동 복구 시도 |
-| **Saga Pattern (Orchestration)** | 회원가입 성공 후 모놀리식 동기화 실패 시 데이터 불일치가 발생하는 분산 트랜잭션 문제 해결. SagaPublisher가 sync-success/sync-failed 이벤트를 발행하고, 실패 시 보상 트랜잭션(회원 삭제)으로 원상 복구. 강력한 락 없이 서비스 간 최종 일관성(Eventual Consistency) 보장 |
+| **Feign Client + Circuit Breaker** | MSA 서비스 간 통신을 선언적 인터페이스(api-clients 모듈)로 정의하여 명확한 규약 확보. 외부 서비스 실패율 50% 초과 시 회로 차단(Open) → Fallback 수행으로 장애 전파 방지. Half-Open 상태에서 자동 복구 시도 |
+| **Saga 패턴** | 회원가입 성공 후 모놀리식 동기화 실패 시 데이터 불일치가 발생하는 분산 트랜잭션 문제 해결. SagaPublisher가 sync-success/sync-failed 이벤트를 발행하고, 실패 시 보상 트랜잭션(회원 삭제)으로 원상 복구. 강력한 락 없이 서비스 간 최종 일관성(Eventual Consistency) 보장 |
 | **Spring Retry + AOP** | 비관적 락 경합 시 재시도를 별도 모듈로 분리하여 서비스 로직 오염 방지. LockTimeoutException 발생 시 점진적 backoff(200ms × n회) 적용 |
 | **QueryDSL 5.1.0** | 복잡한 통계 쿼리(매장별·기간별 매출, 재고 조회)에서 타입 안전 동적 쿼리 필요. JPQL 문자열 방식 대비 컴파일 타임 오류 검출 가능 |
 
