@@ -345,8 +345,8 @@
 |------|------|
 | **MSA** | 기능별 서비스로 분리하여 독립 배포 및 장애 격리 실현 |
 | **API Gateway** | 각 MSA로 요청을 동적으로 라우팅하여 클라이언트가 개별 서비스 주소를 알 필요 없음 |
-| **Eureka** | 서비스 디스커버리를 통해 IP 주소 대신 서비스 이름 기반 동적 라우팅 구현. 모든 서비스가 Eureka에 자신을 등록하고, API Gateway와 연동하여 인스턴스를 자동으로 탐색 |
-| **Kafka** | 결제·발주 등 처리 시간이 긴 작업을 비동기 메시지로 처리하여 응답 속도 개선. 서비스 간 직접 호출을 메시지 기반으로 대체해 결합도를 낮추고 처리량 향상 |
+| **Eureka** | 서비스 이름 기반 동적 라우팅 구현. API Gateway와 연동하여 인스턴스를 자동 탐색 |
+| **Kafka** | 처리 시간이 긴 작업을 비동기 메시지로 처리하여 응답 속도 개선 및 서비스 간 결합도 감소 |
 | **헥사고날** | 핵심 비즈니스 로직(Domain)이 외부 기술(Web, DB, Kafka)에 의존하지 않는 구조 구현. domain → usecase/port(인터페이스) → adapter(in: Controller, out: DB·Kafka) 계층 분리. DB 교체나 새로운 외부 기술 도입 시 핵심 로직 변경 없이 adapter만 교체 가능 |
 | **CQRS 패턴** | 복잡한 조회 쿼리가 쓰기 작업 성능에 영향을 주는 문제 해결. api-auth에서 조회(Query)·변경(Command) Controller·UseCase·Port·Adapter·Repository를 명확히 분리. 복잡한 동적 조회는 QueryDSL, 데이터 변경은 JPA로 역할 분담 |
 | **Feign Client + Circuit Breaker** | MSA 서비스 간 통신을 선언적 인터페이스(api-clients 모듈)로 정의하여 명확한 규약 확보. 외부 서비스 실패율 50% 초과 시 회로 차단(Open) → Fallback 수행으로 장애 전파 방지. Half-Open 상태에서 자동 복구 시도 |
