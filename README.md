@@ -429,40 +429,29 @@
 
 ## 🔧 트러블슈팅 / 개선 경험
 
-### [Backend] 발주 동시성 충돌 — 비관적 락 + 재시도 로직
+### Backend
 
-**문제**: 복수 매장이 동시에 동일 상품 재고에 발주를 요청할 때 재고 음수 현상 발생 가능성<br>
-**원인**: 낙관적 락만으로는 충돌 시 예외 처리 후 재시도 로직 구현이 복잡<br>
-**해결**: `PESSIMISTIC_WRITE` 락으로 ItemDetail 조회 → `LockTimeoutException` 발생 시 최대 3회 재시도 (200ms × 시도 횟수 backoff) 적용<br>
-**결과**: 동시 발주 충돌 시 자동 재시도로 대부분 처리 가능, 3회 초과 시 명시적 예외 반환 (측정 필요)
+- **발주 동시성 충돌 — 비관적 락 + 재시도** : 복수 매장이 동시에 동일 상품 재고에 발주를 요청할 때 재고가 음수가 될 수 있는 문제가 발생했습니다.
+  낙관적 락만으로는 충돌 시 재시도 로직 구현이 복잡해, `PESSIMISTIC_WRITE` 락을 적용하고 `LockTimeoutException` 발생 시 최대 3회 재시도(200ms × 시도 횟수 backoff)로 해결했습니다.
+  이 경험으로 동시성 처리에서 락 전략 선택이 데이터 정합성과 직결된다는 것을 체감했습니다.
 
-### [Backend] 결제 검증 실패 시 부분 상태 불일치
+- **결제 검증 실패 시 상태 불일치** : PortOne 결제는 성공했으나 금액 불일치·재고 부족 시 결제 취소가 누락될 위험이 있었습니다.
+  `validatePayment()` 전체를 try-catch로 감싸 어떤 예외든 `portOneService.cancelPayment()`를 먼저 호출한 뒤 예외를 re-throw하는 방식으로 해결했습니다.
+  외부 결제와 내부 처리 사이의 트랜잭션 경계를 명확히 설계하는 것의 중요성을 깨달았습니다.
 
-**문제**: PortOne 결제는 성공했으나 금액 불일치 또는 재고 부족 시 결제 취소 처리 누락 위험<br>
-**원인**: 결제 검증과 재고/영수증 처리가 별도 단계로 분리되어 중간 실패 시 취소 누락<br>
-**해결**: `validatePayment()` 전체를 try-catch로 감싸 어떤 예외든 `portOneService.cancelPayment()` 먼저 호출 후 예외 re-throw<br>
-**결과**: 결제 취소 누락 없이 클라이언트에 명확한 오류 반환 (측정 필요)
+- **로그아웃 후 Access Token 재사용 문제** : JWT는 Stateless이므로 로그아웃 후에도 만료 전 Access Token이 여전히 유효한 상태였습니다.
+  로그아웃 시 Access Token의 잔여 TTL을 계산해 Redis에 블랙리스트로 저장하고, `JwtAuthenticationFilter`에서 매 요청마다 `isBlacklisted()`를 체크하는 방식으로 해결했습니다.
+  JWT의 Stateless 특성이 보안에 미치는 한계를 이해하고, 이를 보완하는 서버 측 상태 관리의 필요성을 체감했습니다.
 
-### [Backend] 로그아웃 후 Access Token 재사용 가능 문제
+### CI/CD
 
-**문제**: JWT는 Stateless이므로 로그아웃 후에도 만료 전 Access Token이 유효<br>
-**원인**: JWT 자체를 서버에서 무효화하는 표준 방법 없음<br>
-**해결**: 로그아웃 시 Access Token의 잔여 TTL을 계산 → Redis에 해당 토큰을 key로 `"logout"` 저장. `JwtAuthenticationFilter`에서 매 요청마다 `isBlacklisted()` 체크<br>
-**결과**: 로그아웃 후 AT 재사용 방지 (Redis 조회 1회 추가, 측정 필요)
+- **Docker 빌드 권한 문제 — Kaniko 도입** : K8s 파이프라인에서 DinD 방식으로 Docker 이미지를 빌드하려면 `privileged` 권한이 필요했으나, 보안 정책상 허용되지 않았습니다.
+  Kaniko(`gcr.io/kaniko-project/executor:debug`)로 교체하여 privileged 없이 컨테이너 내부에서 이미지를 빌드할 수 있도록 해결했습니다.
+  K8s 환경에서 보안 제약을 고려한 빌드 도구 선택의 중요성을 깨달았습니다.
 
-### [CI/CD] Docker 빌드 권한 문제 — Kaniko 도입
-
-**문제**: K8s 파이프라인에서 DinD 방식으로 Docker 이미지 빌드 시 `privileged` 권한 필요<br>
-**원인**: K8s 보안 정책상 privileged 컨테이너 실행 제한<br>
-**해결**: Kaniko(`gcr.io/kaniko-project/executor:debug`)로 교체 → privileged 없이 컨테이너 내부 이미지 빌드<br>
-**결과**: 보안 컨텍스트 제한 환경에서 정상 빌드·Push 가능
-
-### [CI/CD] 무중단 배포 — Blue-Green 전략 구현
-
-**문제**: 배포 중 재시작으로 인해 매장 POS 결제 흐름이 끊기는 위험<br>
-**원인**: Rolling Update 방식에서도 파드 교체 시 일시적 연결 끊김 발생 가능<br>
-**해결**: Blue-Green 배포 스크립트를 Jenkinsfile에 직접 구현. 현재 활성 색상 감지 → 비활성 Deployment 신규 배포 → `rollout status` 대기 → Service selector 전환 → 구버전 replicas=0<br>
-**결과**: 트래픽 전환 시 다운타임 없이 신규 버전 전환 (측정 필요)
+- **무중단 배포 — Blue-Green 전략 구현** : 배포 중 파드가 재시작되면 매장 POS 결제 흐름이 끊길 위험이 있었습니다.
+  Blue-Green 배포 스크립트를 Jenkinsfile에 직접 구현해, 현재 활성 색상을 감지하고 비활성 Deployment에 신버전을 배포한 뒤 `rollout status` 대기 → Service selector 전환 → 구버전 replicas=0 순으로 처리했습니다.
+  배포 전략 선택이 서비스 연속성과 사용자 경험에 직접적인 영향을 미친다는 것을 체감했습니다.
 
 ---
 
